@@ -26,6 +26,6 @@
   "devDependencies": {
     "eslint": "^7.5.0",
     "stylelint": "^13.6.1",
-    "stylelint-config-standard": "^20.0.0"
+    "stylelint-config-sass-guidelines": "^7.0.0"
   }
 }
