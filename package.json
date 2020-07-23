@@ -19,10 +19,9 @@
   },
   "homepage": "https://github.com/Iswenzz/Simplon-AlloCineClone#readme",
   "dependencies": {
+    "animate.css": "^4.1.0",
     "axios": "^0.19.2",
-    "bootstrap": "^4.5.0",
-    "jquery": "^3.5.1",
-    "popper": "^1.0.1"
+    "materialize-css": "^1.0.0-rc.2"
   },
   "devDependencies": {
     "eslint": "^7.5.0",
