@@ -4,6 +4,7 @@
     "indentation": "tab",
     "string-quotes": "double",
     "color-named": "always-where-possible",
-    "number-leading-zero": null
+    "number-leading-zero": null,
+    "max-nesting-depth": null
   }
 }
