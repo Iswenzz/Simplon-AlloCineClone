@@ -1,0 +1,31 @@
+{
+  "name": "simplon-allo-cline-clone",
+  "version": "1.0.0",
+  "description": "Simplon JS 2nd TP",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "sass --watch assets/scss:dist/css",
+    "build": "sass assets/scss:dist/css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Iswenzz/Simplon-AlloCineClone.git"
+  },
+  "author": "Iswenzz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Iswenzz/Simplon-AlloCineClone/issues"
+  },
+  "homepage": "https://github.com/Iswenzz/Simplon-AlloCineClone#readme",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "bootstrap": "^4.5.0",
+    "jquery": "^3.5.1",
+    "popper": "^1.0.1"
+  },
+  "devDependencies": {
+    "eslint": "^7.5.0",
+    "stylelint": "^13.6.1"
+  }
+}
