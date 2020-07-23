@@ -4,25 +4,54 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>AlloCinéClone</title>
-	<!-- Materialize & AnimateCSS -->
-	<link rel="stylesheet" href="node_modules/animate.css/animate.min.css">
-	<link rel="stylesheet" href="node_modules/materialize-css/dist/css/materialize.min.css">
 	<!-- CSS -->
 	<link rel="stylesheet" href="dist/css/index.css">
 </head>
 <body>
 	<!-- NavBar -->
-	<a class="waves-effect waves-light btn">
-		<i class="material-icons left">cloud</i>
-		button
-	</a>
+	<article class="nav amber z-depth-2">
+		<nav class="container nav-extended amber z-depth-0">
+			<section class="nav-wrapper row">
+				<div class="col s12 m4">
+					<a href="index.html">
+						<img class="responsive-img w-100" src="assets/images/allocine-logo.svg" alt="allocine logo">
+					</a>
+				</div>
+				<div class="col s12 m8">
+					<div class="nav-search input-field w-100">
+						<input id="search" type="search" required>
+						<label class="label-icon" for="search">
+							<i class="material-icons">search</i>
+						</label>
+						<i class="material-icons">close</i>
+					</div>
+				</div>
+			</section>
+			<section class="nav-content">
+				<ul class="tabs tabs-transparent">
+					<li class="tab">
+						<a class="caps">Cinéma</a>
+					</li>
+					<li class="tab">
+						<a class="caps">Séries</a>
+					</li>
+					<li class="tab">
+						<a class="caps">Trailers</a>
+					</li>
+					<li class="tab">
+						<a class="caps">VOD</a>
+					</li>
+				</ul>
+			</section>
+		</nav>
+	</article>
 
 	<!-- Content -->
 
 	<!-- Footer -->
 </body>
 <!-- Materialize & Axios -->
-<script src="node_modules/materialize-css/dist/js/materialize.min.js"></script>
+<script src="./node_modules/materialize-css/dist/js/materialize.min.js"></script>
 <script src="./node_modules/axios/dist/axios.min.js"></script>
 <!-- JS -->
 <script src="./assets/js/main.js"></script>
