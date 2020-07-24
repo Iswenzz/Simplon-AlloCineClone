@@ -20,6 +20,7 @@
   "homepage": "https://github.com/Iswenzz/Simplon-AlloCineClone#readme",
   "dependencies": {
     "animate.css": "^4.1.0",
+    "autocompleter": "^6.0.3",
     "axios": "^0.19.2",
     "materialize-css": "^1.0.0-rc.2"
   },
