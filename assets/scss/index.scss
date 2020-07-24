@@ -6,4 +6,25 @@
 	a {
 		color: black !important;
 	}
+
+	#{&}-search {
+		i {
+			color: black !important;
+		}
+	}
+}
+
+.search-dropdown {
+	div {
+		cursor: pointer;
+		margin: 0.5em;
+
+		&:hover {
+			color: orange;
+		}
+
+		&:visited {
+			color: indigo;
+		}
+	}
 }
