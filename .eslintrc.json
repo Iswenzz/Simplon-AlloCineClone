@@ -8,6 +8,9 @@
         "ecmaVersion": 11
     },
     "rules": {
+        "no-empty": "off",
+        "no-undef": "off",
+        "no-unused-vars":"warn",
         "indent": [
             "error",
             "tab"
