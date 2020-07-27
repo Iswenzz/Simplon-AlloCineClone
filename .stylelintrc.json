@@ -17,6 +17,7 @@
     "color-named": "always-where-possible",
     "number-leading-zero": null,
     "max-nesting-depth": null,
-    "selector-max-compound-selectors": null
+    "selector-max-compound-selectors": null,
+    "selector-list-comma-newline-after": null
   }
 }
