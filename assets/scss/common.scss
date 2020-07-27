@@ -1,5 +1,6 @@
-// material design font
+// material design & montserrat fonts
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap");
 
 // responsive queries
 $queries: (
@@ -27,6 +28,15 @@ $sizes: (0, 25, 50, 75, 100) !default;
 	
 	.h-#{$size} {
 		height: $size;
+	}
+}
+
+// default font
+body {
+	font-family: Arial, sans-serif;
+
+	h1, h2 {
+		font-family: "Montserrat", sans-serif;
 	}
 }
 
