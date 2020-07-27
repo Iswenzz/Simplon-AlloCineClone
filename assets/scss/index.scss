@@ -14,6 +14,14 @@
 	}
 }
 
+.header {
+	@include media(tablet_mobile, portrait) {
+		h1, h2 {
+			font-size: 2em;
+		}
+	}
+}
+
 .cardbox {
 	display: flex;
 	flex-direction: row;
