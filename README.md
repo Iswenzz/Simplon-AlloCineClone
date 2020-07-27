@@ -33,3 +33,9 @@ L’utilisation de l’API TheMovieDB est protégé par une clé d’API. Pour c
 
 _Points facultatifs_
 Vous pouvez utiliser n’importe librairies JS ou CSS, tant qu’elles sont installées avec npm
+
+## TMDB
+Add your TMDB API KEY to a ``.key`` file.
+```js
+const apiKey = "TMDB API KEY STRING";
+```
