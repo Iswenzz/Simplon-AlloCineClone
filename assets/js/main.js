@@ -48,13 +48,15 @@ const drawCards = (cards) =>
 		const cardBody = document.createElement("section");
 		const desc = document.createElement("p");
 
-		img.src = `https://image.tmdb.org/t/p/original/${c.poster_path}`;
-		img.classList.add("responsive-img");
-		img.height = 256;
+		if (c.poster_path)
+			img.src = `https://image.tmdb.org/t/p/original/${c.poster_path}`;
+		else
+			img.src = "./assets/images/empty_portrait.webp";
+		img.style.width = "100%";
+		img.style.height = "100%";
 		cardHeader.appendChild(img);
 		title.innerText = c.title;
 
-		title.classList.add("card-title");
 		cardBody.appendChild(title);
 		let descStr = c.overview;
 		if (descStr.length > 100)

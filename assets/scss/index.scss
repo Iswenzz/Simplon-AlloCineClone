@@ -1,4 +1,4 @@
-@import "./common.scss";
+@import "./common";
 
 .nav {
 	padding: 1em 0;
@@ -26,8 +26,27 @@
 		max-width: 15em;
 		min-width: 15em;
 
+		header {
+			img {
+				border: 1px solid silver;
+			}
+		}
+
 		section {
-			font-size: 0.7em;
+			font-size: 0.9em;
+
+			span {
+				font-size: 1.7em;
+				font-weight: 400;
+			}
+		}
+	}
+
+	@include media(tablet_mobile, portrait) {
+		article {
+			margin: 1em;
+			max-width: 15em;
+			min-width: 15em;
 		}
 	}
 }
