@@ -14,6 +14,24 @@
 	}
 }
 
+.cardbox {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+	margin: 1em 0;
+
+	article {
+		margin: 1em;
+		max-width: 15em;
+		min-width: 15em;
+
+		section {
+			font-size: 0.7em;
+		}
+	}
+}
+
 .search-dropdown {
 	div {
 		cursor: pointer;
