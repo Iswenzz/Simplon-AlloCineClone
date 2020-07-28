@@ -2,7 +2,7 @@ import "./assets/scss/index.scss";
 import "materialize-css";
 import axios from "axios";
 import autocomplete from "autocompleter";
-import { apiKey } from "../key";
+import { apiKey } from "./config/key.js";
 
 M.AutoInit();
 const cardContainer = document.getElementById("card-box");
