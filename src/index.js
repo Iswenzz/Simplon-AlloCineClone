@@ -1,7 +1,12 @@
+import "./assets/scss/index.scss";
+import "materialize-css";
+import axios from "axios";
+import autocomplete from "autocompleter";
+import { apiKey } from "../key";
+
 M.AutoInit();
 const cardContainer = document.getElementById("card-box");
 const searchHeader = document.getElementById("header-title");
-
 
 /**
  * Search bar autocomplete configuration.
@@ -38,7 +43,10 @@ const queryMovie = async (name) =>
 
 		return data.map(m => m.title);
 	}
-	catch (e) { }
+	catch (e) 
+	{
+		console.log(e);
+	}
 	return null;
 };
 
