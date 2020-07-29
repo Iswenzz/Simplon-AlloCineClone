@@ -1,4 +1,5 @@
 import queryString from "querystring";
+import ProgressBar from "progressbar.js";
 import { queryMovie } from "./index";
 
 const movieContent = document.getElementById("movie-content");
@@ -10,6 +11,24 @@ const genre = document.getElementById("movie-genre");
 const duration = document.getElementById("movie-duration");
 const rating = document.getElementById("movie-rating");
 const description = document.getElementById("movie-description");
+
+const ratingCircle = new ProgressBar.Circle(rating, {
+	strokeWidth: 10,
+	easing: "easeInOut",
+	duration: 1400,
+	color: "#9b00c4",
+	trailColor: "#eee",
+	trailWidth: 3,
+	svgStyle: null,
+	text: {
+		autoStyleContainer: false
+	},
+	step: (state, circle) => 
+	{
+		let value = Math.round(circle.value() * 100);
+		circle.setText(value + "%");
+	}
+});
 
 /**
  * Render a movie from url query.
@@ -41,4 +60,6 @@ export const renderMovie = async () =>
 	const hours = Math.floor(data.runtime / 60);
 	const minutes = data.runtime % 60;
 	duration.innerText = hours > 0 ? `${hours}h ${minutes}m` : `${minutes}m`;
+
+	ratingCircle.animate(data.vote_average / 10);
 };
