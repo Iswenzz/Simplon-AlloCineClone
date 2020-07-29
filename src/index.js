@@ -52,7 +52,7 @@ export const queryMovie = async (id) =>
 {
 	try
 	{
-		const res = await axios.get(`https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&language=fr-FR`);
+		const res = await axios.get(`https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&language=en-EN`);
 		return res.data;
 	}
 	catch (e) 
@@ -70,7 +70,7 @@ export const queryMovies = async (name) =>
 {
 	try
 	{
-		const res = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&language=fr-FR&query=${name}&page=1&include_adult=false`);
+		const res = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&language=en-EN&query=${name}&page=1&include_adult=false`);
 		const data = res.data.results.sort((a, b) => a.title.localeCompare(b.title));
 
 		return data;
