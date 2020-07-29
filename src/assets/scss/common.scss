@@ -31,8 +31,10 @@ $sizes: (0, 25, 50, 75, 100) !default;
 	}
 }
 
-// default font
+// default font & colors
 body {
+	background-color: rgb(30, 30, 30);
+	color: gainsboro;
 	font-family: Arial, sans-serif;
 
 	h1, h2 {
@@ -40,6 +42,11 @@ body {
 		font-size: 3em;
 		font-weight: 600;
 	}
+}
+
+.gradient {
+	background: linear-gradient(90deg, rgba(108, 0, 112, 1) 0%, 
+	rgba(12, 0, 141, 1) 50%, rgba(0, 152, 184, 1) 100%);
 }
 
 // Materialize & AnimateCSS

@@ -3,14 +3,13 @@
 .nav {
 	padding: 1em 0;
 
-	a {
-		color: black !important;
+	path:first-child {
+		fill: silver;
 	}
 
-	#{&}-search {
-		i {
-			color: black !important;
-		}
+	path:last-child {
+		fill: whitesmoke;
+		stroke: dimgray;
 	}
 }
 
@@ -23,7 +22,20 @@
 }
 
 .movieinfo {
+	background-repeat: no-repeat;
+	background-size: cover !important;
+	margin-bottom: 5em;
 	min-height: 75vh;
+	padding: 5em 0;
+
+	h1 {
+		font-size: 2em;
+		margin-bottom: 0;
+	}
+
+	#{&}-span {
+		margin-bottom: 1em;
+	}
 }
 
 .cardbox {
@@ -41,7 +53,7 @@
 
 		header {
 			img {
-				border: 1px solid silver;
+				border: 1px solid black;
 			}
 		}
 
@@ -62,6 +74,7 @@
 	z-index: 100;
 
 	div {
+		color: black;
 		cursor: pointer;
 		margin: 0.5em;
 

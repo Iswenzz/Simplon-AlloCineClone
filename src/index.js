@@ -4,6 +4,7 @@ import axios from "axios";
 import autocomplete from "autocompleter";
 import { apiKey } from "./config/key.js";
 import { renderCards } from "./cards";
+import { renderMovie } from "./movie";
 
 M.AutoInit();
 export const cardContainer = document.getElementById("card-container");
@@ -27,7 +28,7 @@ autocomplete({
 				? `"${text.toUpperCase()}" sur Allociné` : "Recherche sur Allociné";
 		
 		// render cards if movie container is defined
-		const movies = await queryMovie(text);
+		const movies = await queryMovies(text);
 		if (cardContainer)
 			renderCards(movies);
 
@@ -44,10 +45,28 @@ autocomplete({
 });
 
 /**
+ * Query a movie from its id.
+ * @param {number} id - The movie ID.
+ */
+export const queryMovie = async (id) =>
+{
+	try
+	{
+		const res = await axios.get(`https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&language=fr-FR`);
+		return res.data;
+	}
+	catch (e) 
+	{
+		console.log(e);
+	}
+	return null;
+};
+
+/**
  * Query all movies that contains the specified string.
  * @param {string} name - The movie query string.
  */
-export const queryMovie = async (name) =>
+export const queryMovies = async (name) =>
 {
 	try
 	{
@@ -62,3 +81,5 @@ export const queryMovie = async (name) =>
 	}
 	return null;
 };
+
+renderMovie();

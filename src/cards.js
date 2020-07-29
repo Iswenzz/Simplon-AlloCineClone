@@ -28,10 +28,9 @@ export const renderCards = (data) =>
 		const desc = document.createElement("p");
 
 		// Card poster
-		if (c.poster_path)
-			img.src = `https://image.tmdb.org/t/p/original/${c.poster_path}`;
-		else
-			img.src = "./assets/images/empty_portrait.webp";
+		img.src = c.poster_path 
+			? `https://image.tmdb.org/t/p/original${c.poster_path}` 
+			: "./assets/images/empty_portrait.webp";
 		img.setAttribute("data-id", c.id);
 		img.style.width = "100%";
 		img.style.height = "100%";
@@ -59,7 +58,7 @@ export const renderCards = (data) =>
 		cardBody.appendChild(desc);
 		
 		// Card content
-		card.classList.add("card");
+		card.classList.add("card", "grey", "darken-4");
 		cardHeader.classList.add("class-image");
 		card.appendChild(cardHeader);
 		cardBody.classList.add("card-content");
