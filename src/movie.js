@@ -12,7 +12,8 @@ const duration = document.getElementById("movie-duration");
 const rating = document.getElementById("movie-rating");
 const description = document.getElementById("movie-description");
 
-const ratingCircle = new ProgressBar.Circle(rating, {
+
+const ratingCircle = rating ? new ProgressBar.Circle(rating, {
 	strokeWidth: 10,
 	easing: "easeInOut",
 	duration: 1400,
@@ -28,7 +29,7 @@ const ratingCircle = new ProgressBar.Circle(rating, {
 		let value = Math.round(circle.value() * 100);
 		circle.setText(value + "%");
 	}
-});
+}) : null;
 
 /**
  * Render a movie from url query.
