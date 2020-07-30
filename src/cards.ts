@@ -1,17 +1,21 @@
 import { cardContainer } from "./index";
+import { IMovie } from "./movie";
 
 /**
  * When clicking on a card image/title callback.
- * @param {MouseEvent} e - The mouse event.
+ * @param e - The mouse event.
  */
-const selectCard = (e) =>
-	window.location.href = `movie.html?id=${e.target.getAttribute("data-id")}`;
+const selectCard = (e: MouseEvent): void =>
+{
+	const card: HTMLDivElement = e.target as HTMLDivElement;
+	window.location.href = `movie.html?id=${card.getAttribute("data-id")}`;
+}
 
 /**
  * Create all DOM cards elements.
- * @param {any[]} data - The movie data array.
+ * @param data - The movie data array.
  */
-export const renderCards = (data) =>
+export const renderCards = (data: IMovie[]): void =>
 {
 	if (!cardContainer)
 		return;
@@ -19,30 +23,30 @@ export const renderCards = (data) =>
 
 	for (const c of data)
 	{
-		const card = document.createElement("article");
-		const cardHeader = document.createElement("header");
-		const img = document.createElement("img");
-		const title = document.createElement("a");
-		const cardBody = document.createElement("section");
-		const cardBodyAction = document.createElement("section");
-		const desc = document.createElement("p");
+		const card: HTMLElement = document.createElement("article");
+		const cardHeader: HTMLElement = document.createElement("header");
+		const img: HTMLImageElement = document.createElement("img");
+		const title: HTMLAnchorElement = document.createElement("a");
+		const cardBody: HTMLElement = document.createElement("section");
+		const cardBodyAction: HTMLElement = document.createElement("section");
+		const desc: HTMLParagraphElement = document.createElement("p");
 
 		// Card poster
 		img.src = c.poster_path 
 			? `https://image.tmdb.org/t/p/original${c.poster_path}` 
 			: "./assets/images/empty_portrait.webp";
-		img.setAttribute("data-id", c.id);
+		img.setAttribute("data-id", c.id.toString());
 		img.style.width = "100%";
 		img.style.height = "100%";
 
 		// Card header
-		cardHeader.setAttribute("data-id", c.id);
+		cardHeader.setAttribute("data-id", c.id.toString());
 		cardHeader.addEventListener("click", selectCard);
 		cardHeader.classList.add("waves-effect", "waves-light");
 		cardHeader.appendChild(img);
 
 		// Card title
-		title.setAttribute("data-id", c.id);
+		title.setAttribute("data-id", c.id.toString());
 		title.addEventListener("click", selectCard);
 		title.innerText = c.title;
 
@@ -50,7 +54,7 @@ export const renderCards = (data) =>
 		cardBodyAction.appendChild(title);
 
 		// Card description
-		let descStr = c.overview;
+		let descStr: string = c.overview;
 		if (descStr.length > 200)
 			descStr = descStr.substr(0, 199) + "...";
 		desc.innerText = descStr;
