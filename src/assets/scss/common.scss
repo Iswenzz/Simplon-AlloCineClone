@@ -32,16 +32,41 @@ $sizes: (0, 25, 50, 75, 100) !default;
 }
 
 // default font & colors
+$scrollbar-bg: #292929;
+$thumb-bg: #383838;
+
+html, body {
+	overflow-x: hidden;
+}
+
 body {
 	background-color: rgb(30, 30, 30);
 	color: gainsboro;
 	font-family: Arial, sans-serif;
+	scrollbar-width: thin;
+	scrollbar-color: $thumb-bg $scrollbar-bg;
 
 	h1, h2 {
 		font-family: "Montserrat", sans-serif;
 		font-size: 3em;
 		font-weight: 600;
 	}
+}
+
+// scrollbar
+::-webkit-scrollbar {
+	width: 12px;
+}
+
+::-webkit-scrollbar-track {
+	background: $scrollbar-bg;
+	border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: $thumb-bg;
+	border: 3px solid $scrollbar-bg;
+	border-radius: 10px;
 }
 
 .gradient {
