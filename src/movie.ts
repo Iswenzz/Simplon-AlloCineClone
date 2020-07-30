@@ -51,14 +51,14 @@ const ratingCircle: any | null = rating ? new ProgressBar.Circle(rating, {
 	},
 	step: (state: any, circle: any) => 
 	{
-		let value = Math.round(circle.value() * 100);
+		const value = Math.round(circle.value() * 100);
 		circle.setText(value + "%");
 	}
 }) : null;
 
 export const renderCast = async (): Promise<void> =>
 {
-
+	return;
 };
 
 /**
@@ -73,11 +73,11 @@ export const renderMovie = async (): Promise<void> =>
 	const movieId: number = parseInt(query["?id"] as string, 10);
 	const data: any = await queryMovie(movieId);
 	console.log(data);
-	
+
 	const bg: string = data.backdrop_path 
 		? `https://image.tmdb.org/t/p/original${data.backdrop_path}` 
 		: "./assets/images/empty_portrait.webp";
-	const lbg: string = "linear-gradient(rgba(0, 100, 200, 0.8), rgba(7, 0, 93, 0.8))";
+	const lbg = "linear-gradient(rgba(0, 100, 200, 0.8), rgba(7, 0, 93, 0.8))";
 	movieContent.setAttribute("style", `background: ${lbg}, url(${bg})`);
 	poster.src = data.poster_path 
 		? `https://image.tmdb.org/t/p/original${data.poster_path}` 

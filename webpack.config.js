@@ -1,6 +1,5 @@
 const path = require("path");
 const StylelintPlugin = require("stylelint-webpack-plugin");
-const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 
 module.exports = {
 	mode: "development",
@@ -15,18 +14,27 @@ module.exports = {
 	plugins: [
 		new StylelintPlugin({
 			configFile: ".stylelintrc.json"
-		}),
-		new ForkTsCheckerWebpackPlugin({ eslint: true })
+		})
 	],
 	module: {
 		rules: [
 			{	// typescript
-				test: /\.tsx?$/,
-				use: "ts-loader",
-				exclude: /node_modules/,
-				options: {
-					
-				}
+				test: /\.(ts|tsx)$/,
+				loader: "ts-loader",
+			},
+			{	// eslint typescript
+				enforce: "pre",
+				test: /\.(ts|tsx)$/,
+				exclude: /(node_modules|dist)/,
+				loader: "eslint-loader"
+			},
+			{	// file loader
+				test: /\.(png|jpe?g|gif)$/i,
+				use: [
+					{
+						loader: "file-loader",
+					},
+				],
 			},
 			{	// style & css & postcss & sass loader
 				test: /\.s[ac]ss$/i,
@@ -53,20 +61,7 @@ module.exports = {
 						loader: "sass-loader", options: { sourceMap: true }
 					}
 				]
-			},
-			{	// babel & eslint
-				test: /\.(js|jsx|ts|tsx)$/,
-				exclude: /(node_modules|bower_components|dist)/,
-				use: ["babel-loader", "eslint-loader"],
-			},
-			{	// file loader
-				test: /\.(png|jpe?g|gif)$/i,
-				use: [
-					{
-						loader: "file-loader",
-					},
-				],
-			},
+			}
 		],
 	},
 };

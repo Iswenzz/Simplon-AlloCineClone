@@ -2,7 +2,7 @@ import "./assets/scss/index.scss";
 import "materialize-css";
 import axios, { AxiosResponse } from "axios";
 import autocomplete, { AutocompleteItem } from "autocompleter";
-import { apiKey } from "./config/key.js";
+import { apiKey } from "./config/key";
 import { renderCards } from "./cards";
 import { renderMovie, IMovie } from "./movie";
 
@@ -46,7 +46,7 @@ autocomplete({
 	},
 	render: (item: AutocompleteItem) => 
 	{
-		let div = document.createElement("div");
+		const div = document.createElement("div");
 		div.textContent = item as string;
 		return div;
 	},

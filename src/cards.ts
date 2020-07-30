@@ -9,7 +9,7 @@ const selectCard = (e: MouseEvent): void =>
 {
 	const card: HTMLDivElement = e.target as HTMLDivElement;
 	window.location.href = `movie.html?id=${card.getAttribute("data-id")}`;
-}
+};
 
 /**
  * Create all DOM cards elements.
