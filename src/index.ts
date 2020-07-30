@@ -10,7 +10,7 @@ M.AutoInit();
 export const cardContainer = document.getElementById("card-container") as HTMLElement;
 const searchHeader = document.getElementById("header-title") as HTMLHeadingElement;
 
-export interface MovieDBResponse
+export interface MovieResponse
 {
 	page: number,
 	results: IMovie[],
@@ -57,14 +57,36 @@ autocomplete({
 });
 
 /**
- * Query a movie from its id.
- * @param id - The movie ID.
+ * Query a person portrait image URL.
+ * @param id - The person ID.
  */
-export const queryMovie = async (id: number): Promise<MovieDBResponse | null> =>
+export const queryPersonImage = async (id: number): Promise<string> =>
 {
 	try
 	{
-		const res: AxiosResponse<MovieDBResponse> = await axios.get(`https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&language=en-EN`);
+		const res: AxiosResponse<any> = await axios.get(
+			`https://api.themoviedb.org/3/person/${id}/images?api_key=${apiKey}`);
+		return res.data.profiles[0] 
+			? `https://image.tmdb.org/t/p/original${res.data.profiles[0].file_path}` 
+			: null;
+	}
+	catch (e) 
+	{
+		console.log(e);
+	}
+	return null;
+};
+
+/**
+ * Query a movie from its id.
+ * @param id - The movie ID.
+ */
+export const queryMovie = async (id: number): Promise<MovieResponse | null> =>
+{
+	try
+	{
+		const res: AxiosResponse<MovieResponse> = await axios.get(
+			`https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&language=en-EN&append_to_response=credits`);
 		return res.data;
 	}
 	catch (e) 
@@ -82,7 +104,8 @@ export const queryMovies = async (name: string): Promise<IMovie[] | null> =>
 {
 	try
 	{
-		const res: AxiosResponse<MovieDBResponse> = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&language=en-EN&query=${name}&page=1&include_adult=false`);
+		const res: AxiosResponse<MovieResponse> = await axios.get(
+			`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&language=en-EN&query=${name}&page=1&include_adult=false`);
 		const data: any = res.data.results.sort((a: IMovie, b: IMovie) => 
 			a.title.localeCompare(b.title));
 

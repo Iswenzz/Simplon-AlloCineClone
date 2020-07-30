@@ -21,6 +21,46 @@
 	}
 }
 
+.casting {
+	h2 {
+		font-size: 2em;
+	}
+
+	#{&}-content {
+		display: flex;
+		overflow-y: hidden !important;
+		overflow-x: scroll !important;
+		margin-bottom: 5em;
+
+		article {
+			min-width: 10em;
+			max-width: 10em;
+			min-height: 18.5em;
+			max-height: 18.5em;
+			margin: 1em !important;
+
+			h4 {
+				font-size: 1em;
+				font-weight: bold;
+				margin: 0.2em 0;
+			}
+
+			p {
+				font-size: 0.8em;
+				color: gainsboro;
+			}
+
+			.card-content {
+				padding: 0.4em;
+			}
+
+			.card-image {
+				border-radius: 1em !important;
+			}
+		}
+	}
+}
+
 .movieinfo {
 	background-repeat: no-repeat;
 	background-size: cover !important;

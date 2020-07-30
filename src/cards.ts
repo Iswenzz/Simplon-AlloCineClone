@@ -42,7 +42,6 @@ export const renderCards = (data: IMovie[]): void =>
 		// Card header
 		cardHeader.setAttribute("data-id", c.id.toString());
 		cardHeader.addEventListener("click", selectCard);
-		cardHeader.classList.add("waves-effect", "waves-light");
 		cardHeader.appendChild(img);
 
 		// Card title
@@ -63,7 +62,7 @@ export const renderCards = (data: IMovie[]): void =>
 		
 		// Card content
 		card.classList.add("card", "grey", "darken-4");
-		cardHeader.classList.add("class-image");
+		cardHeader.classList.add("class-image", "waves-effect", "waves-light");
 		card.appendChild(cardHeader);
 		cardBody.classList.add("card-content");
 		card.appendChild(cardBody);
