@@ -83,7 +83,6 @@ export const queryMovies = async (name: string): Promise<IMovie[] | null> =>
 	try
 	{
 		const res: AxiosResponse<MovieDBResponse> = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&language=en-EN&query=${name}&page=1&include_adult=false`);
-		console.log(res);
 		const data: any = res.data.results.sort((a: IMovie, b: IMovie) => 
 			a.title.localeCompare(b.title));
 

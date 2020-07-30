@@ -1,5 +1,6 @@
 const path = require("path");
 const StylelintPlugin = require("stylelint-webpack-plugin");
+const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 
 module.exports = {
 	mode: "development",
@@ -9,12 +10,13 @@ module.exports = {
 		path: path.resolve(__dirname, "dist"),
 	},
 	resolve: {
-		extensions: [ ".tsx", ".ts", ".js" ],
+		extensions: [ ".tsx", ".jsx", ".ts", ".js" ],
 	},
 	plugins: [
 		new StylelintPlugin({
 			configFile: ".stylelintrc.json"
-		})
+		}),
+		new ForkTsCheckerWebpackPlugin({ eslint: true })
 	],
 	module: {
 		rules: [
@@ -22,6 +24,9 @@ module.exports = {
 				test: /\.tsx?$/,
 				use: "ts-loader",
 				exclude: /node_modules/,
+				options: {
+					
+				}
 			},
 			{	// style & css & postcss & sass loader
 				test: /\.s[ac]ss$/i,
@@ -50,7 +55,7 @@ module.exports = {
 				]
 			},
 			{	// babel & eslint
-				test: /\.m?js$/,
+				test: /\.(js|jsx|ts|tsx)$/,
 				exclude: /(node_modules|bower_components|dist)/,
 				use: ["babel-loader", "eslint-loader"],
 			},

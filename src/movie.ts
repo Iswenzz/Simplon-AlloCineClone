@@ -56,6 +56,11 @@ const ratingCircle: any | null = rating ? new ProgressBar.Circle(rating, {
 	}
 }) : null;
 
+export const renderCast = async (): Promise<void> =>
+{
+
+};
+
 /**
  * Render a movie from url query.
  */
@@ -65,7 +70,8 @@ export const renderMovie = async (): Promise<void> =>
 		return;
 	
 	const query: ParsedUrlQuery = parse(location.search);
-	const data: any = await queryMovie(parseInt(query["?id"] as string, 10));
+	const movieId: number = parseInt(query["?id"] as string, 10);
+	const data: any = await queryMovie(movieId);
 	console.log(data);
 	
 	const bg: string = data.backdrop_path 
