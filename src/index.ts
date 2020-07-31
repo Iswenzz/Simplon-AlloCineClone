@@ -67,7 +67,7 @@ export const queryPersonImage = async (id: number): Promise<string> =>
 		const res: AxiosResponse<any> = await axios.get(
 			`https://api.themoviedb.org/3/person/${id}/images?api_key=${apiKey}`);
 		return res.data.profiles[0] 
-			? `https://image.tmdb.org/t/p/original${res.data.profiles[0].file_path}` 
+			? `https://image.tmdb.org/t/p/w400${res.data.profiles[0].file_path}` 
 			: null;
 	}
 	catch (e) 

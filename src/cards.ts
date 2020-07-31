@@ -33,11 +33,10 @@ export const renderCards = (data: IMovie[]): void =>
 
 		// Card poster
 		img.src = c.poster_path 
-			? `https://image.tmdb.org/t/p/original${c.poster_path}` 
-			: "./assets/images/empty_portrait.webp";
+			? `https://image.tmdb.org/t/p/w400${c.poster_path}` 
+			: "./src/assets/images/empty_portrait.webp";
+		img.classList.add("responsive-img");
 		img.setAttribute("data-id", c.id.toString());
-		img.style.width = "100%";
-		img.style.height = "100%";
 
 		// Card header
 		cardHeader.setAttribute("data-id", c.id.toString());

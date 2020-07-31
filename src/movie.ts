@@ -5,7 +5,6 @@ import YouTubePlayer from "youtube-player";
 
 const movieContent = document.getElementById("movie-content") as HTMLElement;
 const movieCasting = document.getElementById("casting-content") as HTMLElement;
-const movieVideo = document.getElementById("movie-video") as HTMLElement;
 
 const poster = document.getElementById("movie-poster") as HTMLImageElement;
 const title = document.getElementById("movie-title") as HTMLHeadingElement;
@@ -140,7 +139,6 @@ export const renderTrailer = async (movieData: IMovie): Promise<void> =>
 
 	const player: any = YouTubePlayer("movie-video");
 	player.loadVideoById(trailer.key);
-	player.playVideo();
 };
 
 /**
@@ -158,13 +156,13 @@ export const renderMovie = async (): Promise<void> =>
 
 	// movie poster & background
 	const bg: string = data.backdrop_path 
-		? `https://image.tmdb.org/t/p/original${data.backdrop_path}` 
-		: "./assets/images/empty_portrait.webp";
+		? `https://image.tmdb.org/t/p/w400${data.backdrop_path}` 
+		: "./src/assets/images/empty_portrait.webp";
 	const lbg = "linear-gradient(rgba(0, 100, 200, 0.8), rgba(7, 0, 93, 0.8))";
 	movieContent.setAttribute("style", `background: ${lbg}, url(${bg})`);
 	poster.src = data.poster_path 
-		? `https://image.tmdb.org/t/p/original${data.poster_path}` 
-		: "./assets/images/empty_portrait.webp";
+		? `https://image.tmdb.org/t/p/w400${data.poster_path}` 
+		: "./src/assets/images/empty_portrait.webp";
 
 	// movie title & description
 	title.innerText = data.title;
