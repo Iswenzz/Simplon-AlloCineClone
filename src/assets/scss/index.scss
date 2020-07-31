@@ -21,6 +21,23 @@
 	}
 }
 
+.video {
+	margin-bottom: 3em;
+	
+	h2 {
+		font-size: 2em;
+	}
+
+	iframe {
+		width: 100% !important;
+		height: 100% !important;
+	}
+
+	#{&}-player {
+		min-height: 70vh;
+	}
+}
+
 .casting {
 	h2 {
 		font-size: 2em;

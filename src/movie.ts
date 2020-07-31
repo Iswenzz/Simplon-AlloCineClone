@@ -1,9 +1,11 @@
 import { parse, ParsedUrlQuery } from "querystring";
 import ProgressBar from "progressbar.js";
 import { queryMovie, queryPersonImage } from "./index";
+import YouTubePlayer from "youtube-player";
 
 const movieContent = document.getElementById("movie-content") as HTMLElement;
 const movieCasting = document.getElementById("casting-content") as HTMLElement;
+const movieVideo = document.getElementById("movie-video") as HTMLElement;
 
 const poster = document.getElementById("movie-poster") as HTMLImageElement;
 const title = document.getElementById("movie-title") as HTMLHeadingElement;
@@ -29,8 +31,11 @@ export interface IMovie
 	poster_path?: string,
 	tagline?: string,
 	video?: boolean,
+	videos?: any
 	vote_average?: number,
-	vote_count?: number
+	vote_count?: number,
+	release_date?: string,
+	runtime?: number,
 	credits?: ICredits
 }
 
@@ -89,7 +94,7 @@ const ratingCircle: any | null = rating ? new ProgressBar.Circle(rating, {
 
 /**
  * Render all actors/cast that played in the movie.
- * @param movieId - The movie ID.
+ * @param movieData - The movie result data.
  */
 export const renderCast = async (movieData: IMovie): Promise<void> =>
 {
@@ -124,6 +129,21 @@ export const renderCast = async (movieData: IMovie): Promise<void> =>
 };
 
 /**
+ * Render the movie trailer using YT Player.
+ * @param movieData - The movie result data.
+ */
+export const renderTrailer = async (movieData: IMovie): Promise<void> =>
+{
+	console.log(movieData);
+	const trailer: any = movieData.videos.results[0];
+	if (!trailer) return;
+
+	const player: any = YouTubePlayer("movie-video");
+	player.loadVideoById(trailer.key);
+	player.playVideo();
+};
+
+/**
  * Render a movie from url query.
  */
 export const renderMovie = async (): Promise<void> =>
@@ -134,7 +154,7 @@ export const renderMovie = async (): Promise<void> =>
 	// query movie content data
 	const query: ParsedUrlQuery = parse(location.search);
 	const movieId: number = parseInt(query["?id"] as string, 10);
-	const data: any = await queryMovie(movieId);
+	const data: IMovie = await queryMovie(movieId);
 
 	// movie poster & background
 	const bg: string = data.backdrop_path 
@@ -161,6 +181,6 @@ export const renderMovie = async (): Promise<void> =>
 	// movie rating
 	ratingCircle.animate(data.vote_average / 10);
 
-	// render movie casting
+	await renderTrailer(data);
 	await renderCast(data);
 };

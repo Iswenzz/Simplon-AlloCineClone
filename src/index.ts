@@ -81,12 +81,12 @@ export const queryPersonImage = async (id: number): Promise<string> =>
  * Query a movie from its id.
  * @param id - The movie ID.
  */
-export const queryMovie = async (id: number): Promise<MovieResponse | null> =>
+export const queryMovie = async (id: number): Promise<IMovie | null> =>
 {
 	try
 	{
-		const res: AxiosResponse<MovieResponse> = await axios.get(
-			`https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&language=en-EN&append_to_response=credits`);
+		const res: AxiosResponse<IMovie> = await axios.get(
+			`https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&language=en-EN&append_to_response=credits,videos`);
 		return res.data;
 	}
 	catch (e) 
