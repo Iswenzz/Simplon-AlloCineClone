@@ -1,22 +1,15 @@
-import "./assets/scss/index.scss";
 import "materialize-css";
+import "./assets/scss/index.scss";
 import axios, { AxiosResponse } from "axios";
 import autocomplete, { AutocompleteItem } from "autocompleter";
 import { apiKey } from "./config/key";
 import { renderCards } from "./cards";
-import { renderMovie, IMovie } from "./movie";
+import { renderMovie } from "./movie";
+import { IMovie, MovieResponse, PeopleImageResponse } from "moviedb";
 
 M.AutoInit();
 export const cardContainer = document.getElementById("card-container") as HTMLElement;
 const searchHeader = document.getElementById("header-title") as HTMLHeadingElement;
-
-export interface MovieResponse
-{
-	page: number,
-	results: IMovie[],
-	total_pages: number,
-	total_results: number
-}
 
 /**
  * Search bar autocomplete configuration.
@@ -33,7 +26,7 @@ autocomplete({
 		// change search header
 		if (searchHeader)
 			searchHeader.innerText = text 
-				? `"${text.toUpperCase()}" sur Allociné` : "Recherche sur Allociné";
+				? `"${text.toUpperCase()}" on Allociné` : "Search on Allociné";
 		
 		// render cards if movie container is defined
 		const movies: IMovie[] = await queryMovies(text);
@@ -41,7 +34,10 @@ autocomplete({
 			renderCards(movies);
 
 		// update autocompleter data
-		const movieNames = movies.map((m: any) => m.title);
+		const movieNames: AutocompleteItem[] = movies.map((m: IMovie) => ({
+			label: m.title,
+			group: null
+		}));
 		update(movieNames);
 	},
 	render: (item: AutocompleteItem) => 
@@ -64,11 +60,11 @@ export const queryPersonImage = async (id: number): Promise<string> =>
 {
 	try
 	{
-		const res: AxiosResponse<any> = await axios.get(
+		const res: AxiosResponse<PeopleImageResponse> = await axios.get(
 			`https://api.themoviedb.org/3/person/${id}/images?api_key=${apiKey}`);
 		return res.data.profiles[0] 
 			? `https://image.tmdb.org/t/p/w400${res.data.profiles[0].file_path}` 
-			: null;
+			: "./src/assets/images/empty_portrait.webp";
 	}
 	catch (e) 
 	{
@@ -86,7 +82,7 @@ export const queryMovie = async (id: number): Promise<IMovie | null> =>
 	try
 	{
 		const res: AxiosResponse<IMovie> = await axios.get(
-			`https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&language=en-EN&append_to_response=credits,videos`);
+			`https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&language=en-EN&append_to_response=credits,videos,keywords`);
 		return res.data;
 	}
 	catch (e) 
@@ -106,7 +102,7 @@ export const queryMovies = async (name: string): Promise<IMovie[] | null> =>
 	{
 		const res: AxiosResponse<MovieResponse> = await axios.get(
 			`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&language=en-EN&query=${name}&page=1&include_adult=false`);
-		const data: any = res.data.results.sort((a: IMovie, b: IMovie) => 
+		const data: IMovie[] = res.data.results.sort((a: IMovie, b: IMovie) => 
 			a.title.localeCompare(b.title));
 
 		return data;

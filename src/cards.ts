@@ -1,5 +1,5 @@
 import { cardContainer } from "./index";
-import { IMovie } from "./movie";
+import { IMovie } from "moviedb";
 
 /**
  * When clicking on a card image/title callback.

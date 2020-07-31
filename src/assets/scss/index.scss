@@ -1,106 +1,11 @@
 @import "./common";
-
-.nav {
-	padding: 1em 0;
-
-	path:first-child {
-		fill: silver;
-	}
-
-	path:last-child {
-		fill: whitesmoke;
-	}
-}
+@import "./navbar";
+@import "./footer";
 
 .header {
 	@include media(tablet_mobile, portrait) {
 		h1, h2 {
 			font-size: 2em;
-		}
-	}
-}
-
-.video {
-	margin-bottom: 3em;
-	
-	h2 {
-		font-size: 2em;
-	}
-
-	iframe {
-		width: 100% !important;
-		height: 100% !important;
-	}
-
-	#{&}-player {
-		min-height: 70vh;
-	}
-}
-
-.casting {
-	h2 {
-		font-size: 2em;
-	}
-
-	#{&}-content {
-		display: flex;
-		overflow-y: hidden !important;
-		overflow-x: scroll !important;
-		margin-bottom: 5em;
-
-		article {
-			min-width: 10em;
-			max-width: 10em;
-			min-height: 18.5em;
-			max-height: 18.5em;
-			margin: 1em !important;
-
-			h4 {
-				font-size: 1em;
-				font-weight: bold;
-				margin: 0.2em 0;
-			}
-
-			p {
-				font-size: 0.8em;
-				color: gainsboro;
-			}
-
-			.card-content {
-				padding: 0.4em;
-			}
-
-			.card-image {
-				border-radius: 1em !important;
-			}
-		}
-	}
-}
-
-.movieinfo {
-	background-repeat: no-repeat;
-	background-size: cover !important;
-	margin-bottom: 5em;
-	min-height: 75vh;
-	padding: 5em 0;
-
-	h1 {
-		font-size: 2em;
-		margin-bottom: 0;
-	}
-
-	#{&}-span {
-		margin-bottom: 1em;
-	}
-
-	#{&}-rating {
-		width: 75px;
-		height: 75px;
-		margin-bottom: 1em !important;
-		position: relative;
-
-		.progressbar-text {
-			color: white !important;
 		}
 	}
 }
@@ -132,35 +37,6 @@
 				font-size: 1.4em;
 				font-weight: 400;
 			}
-		}
-	}
-}
-
-.search-dropdown {
-	background-color: rgba($color: white, $alpha: 0.9) !important;
-	z-index: 100;
-
-	div {
-		color: black;
-		cursor: pointer;
-		margin: 0.5em;
-
-		&:hover {
-			color: orange;
-		}
-
-		&:visited {
-			color: indigo;
-		}
-	}
-}
-
-.footer {
-	a {
-		margin: 0 0.2em;
-
-		img {
-			filter: invert(90%);
 		}
 	}
 }

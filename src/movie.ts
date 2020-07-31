@@ -1,7 +1,9 @@
+import "./assets/scss/movie.scss";
 import { parse, ParsedUrlQuery } from "querystring";
 import ProgressBar from "progressbar.js";
 import { queryMovie, queryPersonImage } from "./index";
 import YouTubePlayer from "youtube-player";
+import { ICast, IMovie, IVideo } from "moviedb";
 
 const movieContent = document.getElementById("movie-content") as HTMLElement;
 const movieCasting = document.getElementById("casting-content") as HTMLElement;
@@ -14,66 +16,7 @@ const duration = document.getElementById("movie-duration") as HTMLDivElement;
 const rating = document.getElementById("movie-rating") as HTMLDivElement;
 const description = document.getElementById("movie-description") as HTMLDivElement;
 
-export interface IMovie
-{
-	adult?: boolean,
-	backdrop_path?: string,
-	budget?: number,
-	genres?: IGenre[]
-	id: number,
-	homepage?: string,
-	original_language?: string,
-	original_title?: string,
-	title?: string,
-	overview?: string,
-	popularity: number,
-	poster_path?: string,
-	tagline?: string,
-	video?: boolean,
-	videos?: any
-	vote_average?: number,
-	vote_count?: number,
-	release_date?: string,
-	runtime?: number,
-	credits?: ICredits
-}
-
-export interface ICredits
-{
-	cast: ICast[],
-	crew: ICrew[],
-	id: number
-}
-
-export interface IGenre
-{
-	id: number,
-	name: string
-}
-
-export interface ICast
-{
-	cast_id: number,
-	character: string,
-	gender?: number,
-	id: number,
-	name: string,
-	order: number,
-	profile_path?: string
-}
-
-export interface ICrew
-{
-	credit_id?: string,
-	department?: string,
-	genre?: number,
-	id: number,
-	job?: string,
-	name: string,
-	profile_path?: string
-}
-
-const ratingCircle: any | null = rating ? new ProgressBar.Circle(rating, {
+const ratingCircle: any = rating ? new ProgressBar.Circle(rating, {
 	strokeWidth: 10,
 	easing: "easeInOut",
 	duration: 1400,
@@ -133,8 +76,7 @@ export const renderCast = async (movieData: IMovie): Promise<void> =>
  */
 export const renderTrailer = async (movieData: IMovie): Promise<void> =>
 {
-	console.log(movieData);
-	const trailer: any = movieData.videos.results[0];
+	const trailer: IVideo = movieData.videos.results[0];
 	if (!trailer) return;
 
 	const player: any = YouTubePlayer("movie-video");

@@ -1,0 +1,30 @@
+.nav {
+	padding: 1em 0;
+
+	path:first-child {
+		fill: silver;
+	}
+
+	path:last-child {
+		fill: whitesmoke;
+	}
+}
+
+.search-dropdown {
+	background-color: rgba($color: white, $alpha: 0.9) !important;
+	z-index: 100;
+
+	div {
+		color: black;
+		cursor: pointer;
+		margin: 0.5em;
+
+		&:hover {
+			color: orange;
+		}
+
+		&:visited {
+			color: indigo;
+		}
+	}
+}
