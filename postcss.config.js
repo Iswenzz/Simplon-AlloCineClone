@@ -1,7 +1,8 @@
 module.exports = {
 	parser: "postcss-scss",
-	plugins: [
-		require("postcss-import"),
-		require("cssnano")
-	]
+	plugins: {
+		"postcss-preset-env": {},
+		"postcss-font-magician": {},
+		"cssnano": {}
+	}
 };

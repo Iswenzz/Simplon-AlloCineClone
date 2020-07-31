@@ -36,7 +36,7 @@ module.exports = {
 					},
 				],
 			},
-			{	// style & css & postcss & sass loader
+			{	// style & css & sass & postcss loader
 				test: /\.s[ac]ss$/i,
 				use: [
 					{ 
@@ -49,6 +49,9 @@ module.exports = {
 						}
 					},
 					{
+						loader: "sass-loader", options: { sourceMap: true }
+					},
+					{
 						loader: "postcss-loader",
 						options: {
 							sourceMap: true,
@@ -56,12 +59,9 @@ module.exports = {
 								path: "postcss.config.js"
 							}
 						}
-					},
-					{
-						loader: "sass-loader", options: { sourceMap: true }
 					}
 				]
 			}
-		],
-	},
+		]
+	}
 };
