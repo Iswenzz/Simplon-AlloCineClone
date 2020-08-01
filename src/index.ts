@@ -61,7 +61,7 @@ autocomplete<AutocompleteMediaItem>({
 
 		img.src = item.poster 
 			? `https://image.tmdb.org/t/p/w400${item.poster}` 
-			: "./src/assets/images/empty_portrait.webp";
+			: require("./assets/images/empty_portrait.webp").default;
 		p.innerText = item.label;
 
 		div.classList.add("autocomplete-item");
@@ -84,7 +84,7 @@ export const queryPersonImage = async (id: number): Promise<string> =>
 			`https://api.themoviedb.org/3/person/${id}/images?api_key=${apiKey}`);
 		return res.data.profiles[0] 
 			? `https://image.tmdb.org/t/p/w400${res.data.profiles[0].file_path}` 
-			: "./src/assets/images/empty_portrait.webp";
+			: require("./assets/images/empty_portrait.webp").default;
 	}
 	catch (e) 
 	{
@@ -184,7 +184,7 @@ export const renderToCarousel = async (mediaData: IMedia[], carousel: HTMLElemen
 
 		img.src = data.poster_path 
 			? `https://image.tmdb.org/t/p/w400${data.poster_path}` 
-			: "./src/assets/images/empty_portrait.webp";
+			: require("./assets/images/empty_portrait.webp").default;
 
 		item.classList.add("carousel-item");
 		item.href = `media.html?id=${data.id}&type=${data.media_type ?? "movie"}`;

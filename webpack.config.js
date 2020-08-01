@@ -15,7 +15,7 @@ module.exports = {
 	},
 	plugins: [
 		new CleanWebpackPlugin({
-			cleanAfterEveryBuildPatterns: ["!*.html"],
+			cleanStaleWebpackAssets: false,
 		}),
 		...["index", "media", "search"].map(html => new HtmlWebpackPlugin({
 			filename: `${html}.html`,
@@ -46,12 +46,12 @@ module.exports = {
 				loader: "eslint-loader"
 			},
 			{	// file loader
-				test: /\.(png|jpe?g|gif|svg)$/i,
-				use: [
-					{
-						loader: "file-loader",
-					},
-				],
+				test: /\.(png|jpe?g|gif|svg|webp)$/i,
+				loader: "file-loader"
+			},
+			{	// html loader
+				test: /\.html$/i,
+				loader: "html-loader",
 			},
 			{	// style & css & sass & postcss loader
 				test: /\.s[ac]ss$/i,

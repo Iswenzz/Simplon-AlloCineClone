@@ -71,7 +71,7 @@ export const renderCards = (mediaData: IMedia[]): void =>
 		// Card poster
 		img.src = data.poster_path 
 			? `https://image.tmdb.org/t/p/w400${data.poster_path}` 
-			: "./src/assets/images/empty_portrait.webp";
+			: require("./assets/images/empty_portrait.webp").default;
 		img.setAttribute("data-id", data.id.toString());
 		img.setAttribute("data-type", data.media_type.toString());
 

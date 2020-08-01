@@ -164,12 +164,12 @@ export const renderMedia = async (): Promise<void> =>
 	// media poster & background
 	const bg: string = data.backdrop_path 
 		? `https://image.tmdb.org/t/p/original${data.backdrop_path}` 
-		: "./src/assets/images/empty_portrait.webp";
+		: require("./assets/images/empty_portrait.webp").default;
 	const lbg = "linear-gradient(rgba(0, 100, 200, 0.8), rgba(7, 0, 93, 0.8))";
 	mediaContent.setAttribute("style", `background: ${lbg}, url(${bg})`);
 	poster.src = data.poster_path 
 		? `https://image.tmdb.org/t/p/w400${data.poster_path}` 
-		: "./src/assets/images/empty_portrait.webp";
+		: require("./assets/images/empty_portrait.webp").default;
 	M.Materialbox.init(poster);
 
 	// media title & description
