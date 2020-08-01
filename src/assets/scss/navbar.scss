@@ -1,5 +1,9 @@
 .nav {
-	padding: 1em 0;
+	padding-top: 1.5em;
+
+	.nav-wrapper {
+		margin: 0;
+	}
 
 	path:first-child {
 		fill: silver;

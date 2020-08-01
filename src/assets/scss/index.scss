@@ -15,7 +15,8 @@
 			left: 0;
 			bottom: 0;
 			right: 0;
-			background-image: url("https://www.themoviedb.org/assets/2/v4/misc/trending-bg-39afc2a5f77e31d469b25c187814c0a2efef225494c038098d62317d923f8415.svg");
+			background-image: url("../images/spectrum.svg");
+			// background-image: url("../images/join-bg.jpg");
 			background-size: cover;
 			background-repeat: no-repeat;
 			filter: hue-rotate(100deg) opacity(0.6);
@@ -36,7 +37,7 @@
 			left: 0;
 			bottom: 0;
 			right: 0;
-			background-image: url("https://www.themoviedb.org/assets/2/v4/account_pipes/red-b64316df5633aa0687196d10fa429418035b55122c0b5726082669b9748a0e2a.svg");
+			background-image: url("../images/red-lines.svg");
 			background-size: cover;
 			background-repeat: no-repeat;
 			filter: hue-rotate(280deg);
@@ -57,7 +58,7 @@
 
 .join {
 	margin-bottom: 3em;
-	background-image: url("https://image.tmdb.org/t/p/w1920_and_h800_multi_faces_filter(duotone,190235,ad47dd)/lMnoYqPIAVL0YaLP5YjRy7iwaYv.jpg");
+	background-image: url("../images/join-bg.jpg");
 
 	#{&}-content {
 		padding: 3em 0;
