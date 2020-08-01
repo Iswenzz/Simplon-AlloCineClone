@@ -128,7 +128,7 @@ export const renderTrailer = async (movieData: IMovie): Promise<void> =>
 };
 
 /**
- * Render a movie from url query.
+ * Render a movie from URL query.
  */
 export const renderMovie = async (): Promise<void> =>
 {
@@ -139,7 +139,6 @@ export const renderMovie = async (): Promise<void> =>
 	const query: ParsedUrlQuery = parse(location.search);
 	const movieId: number = parseInt(query["?id"] as string, 10);
 	const data: IMovie = await queryMovie(movieId);
-	console.log(data);
 
 	// movie poster & background
 	const bg: string = data.backdrop_path 

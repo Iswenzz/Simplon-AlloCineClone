@@ -3,13 +3,14 @@ import "./assets/scss/index.scss";
 import axios, { AxiosResponse } from "axios";
 import autocomplete, { AutocompleteItem } from "autocompleter";
 import { apiKey } from "./config/key";
-import { renderCards } from "./cards";
+import { renderCardContainer } from "./cards";
 import { renderMovie } from "./movie";
 import { IMovie, MovieResponse, PeopleImageResponse } from "moviedb";
 
 M.AutoInit();
 export const cardContainer = document.getElementById("card-container") as HTMLElement;
-const searchHeader = document.getElementById("header-title") as HTMLHeadingElement;
+export const searchBox = document.getElementById("search") as HTMLInputElement;
+export const searchHeader = document.getElementById("header-title") as HTMLHeadingElement;
 
 export interface AutocompleteMovieItem extends AutocompleteItem
 {
@@ -18,29 +19,29 @@ export interface AutocompleteMovieItem extends AutocompleteItem
 }
 
 /**
+ * Searchbox keydown event callback.
+ */
+searchBox.addEventListener("keydown", (e: KeyboardEvent) =>
+{
+	if (e.keyCode === 13)
+		window.location.href = `index.html?search=${(e.target as HTMLInputElement).value}`;
+});
+
+/**
  * Search bar autocomplete configuration.
  */
 autocomplete<AutocompleteMovieItem>({
-	input: document.getElementById("search") as HTMLInputElement,
+	input: searchBox,
 	minLength: 2,
 	preventSubmit: true,
 	className: "search-dropdown white z-depth-2",
 	fetch: async (text: string, update: (items: false | AutocompleteMovieItem[]) => void) => 
 	{
 		text = text.toLowerCase();
-
-		// change search header
-		if (searchHeader)
-			searchHeader.innerText = text 
-				? `"${text.toUpperCase()}" on Allociné` : "Search on Allociné";
 		
-		// render cards if movie container is defined
-		const movies: IMovie[] = await queryMovies(text);
-		if (cardContainer)
-			renderCards(movies);
-
 		// update autocompleter data
-		const movieNames: AutocompleteMovieItem[] = movies.map((m: IMovie) => ({
+		const movies: IMovie[] = await queryMovies(text);
+		const movieNames: AutocompleteMovieItem[] = movies?.map((m: IMovie) => ({
 			id: m.id,
 			label: m.title,
 			poster: m.poster_path,
@@ -61,12 +62,10 @@ autocomplete<AutocompleteMovieItem>({
 
 		div.classList.add("autocomplete-item");
 		div.append(img, p);
+		div.addEventListener("click", () => window.location.href = `movie.html?id=${item.id}`);
 		return div;
 	},
-	onSelect: (item: AutocompleteMovieItem) =>
-	{
-		// TODO
-	}
+	onSelect: () => null
 });
 
 /**
@@ -131,4 +130,5 @@ export const queryMovies = async (name: string): Promise<IMovie[] | null> =>
 	return null;
 };
 
+renderCardContainer();
 renderMovie();

@@ -1,5 +1,6 @@
-import { cardContainer } from "./index";
+import { cardContainer, queryMovies, searchHeader } from "./index";
 import { IMovie } from "moviedb";
+import { ParsedUrlQuery, parse } from "querystring";
 
 /**
  * When clicking on a card image/title callback.
@@ -9,6 +10,30 @@ const selectCard = (e: MouseEvent): void =>
 {
 	const card: HTMLDivElement = e.target as HTMLDivElement;
 	window.location.href = `movie.html?id=${card.getAttribute("data-id")}`;
+};
+
+/**
+ * Render the card container from URL query.
+ */
+export const renderCardContainer = async (): Promise<void> =>
+{
+	if (!cardContainer)
+		return;
+
+	const query: ParsedUrlQuery = parse(location.search);
+	const search: string = query["?search"] as string;
+	
+	if (search)
+	{
+		// update search header
+		if (searchHeader)
+			searchHeader.innerText = search 
+				? `"${search.toUpperCase()}" on Allociné` : "Search on Allociné";
+		
+		// render cards
+		const data: IMovie[] = await queryMovies(search);
+		renderCards(data);
+	}
 };
 
 /**
