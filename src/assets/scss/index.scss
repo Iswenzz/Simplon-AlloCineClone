@@ -55,6 +55,32 @@
 	}
 }
 
+.join {
+	margin-bottom: 3em;
+	background-image: url("https://image.tmdb.org/t/p/w1920_and_h800_multi_faces_filter(duotone,190235,ad47dd)/lMnoYqPIAVL0YaLP5YjRy7iwaYv.jpg");
+
+	#{&}-content {
+		padding: 3em 0;
+
+		h3 {
+			font-size: 2em;
+			font-weight: bold;
+		}
+	
+		h5 {
+			font-size: 1.3em;
+			margin: 1em 0;
+		}
+	
+		ul {
+			li {
+				list-style-type: disc !important;
+				font-size: 1.2em;
+			}
+		}
+	}
+}
+
 .plx {	
 	#{&}-bg {
 		img {
