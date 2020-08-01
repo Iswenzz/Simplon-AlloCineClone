@@ -16,7 +16,7 @@
 					</a>
 				</div>
 				<div class="col s12 m8">
-					<div class="nav-search input-field white w-100">
+					<div class="nav-search input-field white">
 						<input id="search" type="search">
 						<label class="label-icon" for="search">
 							<i class="material-icons">search</i>
@@ -26,7 +26,7 @@
 				</div>
 			</section>
 			<section class="nav-content">
-				<ul class="tabs tabs-transparent">
+				<ul id="nav-tabs" class="tabs tabs-transparent">
 					<li class="tab">
 						<a class="caps">Movies</a>
 					</li>
@@ -45,7 +45,29 @@
 	</article>
 
 	<!-- Content -->
-	<main></main>
+	<main>
+		<!-- Parallax -->
+		<section class="plx parallax-container">
+			<div id="plx" class="parallax plx-bg">
+				<img id="plx-bg" alt="parallax bg">
+			</div>
+			<header class="container plx-header">
+				<h1>Millions of movies, TV shows and people to discover. Explore now.</h1>
+			</header>
+		</section>
+
+		<!-- Upcoming -->
+		<section class="upcoming z-depth-3 grey darken-4">
+			<h2 class="container">Upcoming</h2>
+			<div id="upcoming-carousel" class="carousel"></div>
+		</section>
+
+		<!-- Trending -->
+		<section class="trending z-depth-3 grey darken-4">
+			<h2 class="container">Trending</h2>
+			<div id="trending-carousel" class="carousel"></div>
+		</section>
+	</main>
 
 	<!-- Footer -->
 	<footer class="footer page-footer grey darken-4 z-depth-2">

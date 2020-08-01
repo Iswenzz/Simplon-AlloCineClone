@@ -3,7 +3,9 @@ import { parse, ParsedUrlQuery } from "querystring";
 import ProgressBar from "progressbar.js";
 import { queryMovie, queryPersonImage } from "./index";
 import YouTubePlayer from "youtube-player";
-import { ICast, IMovie, IVideo } from "moviedb";
+import { ICast, IMedia, IVideo } from "moviedb";
+
+M.Tabs.init(document.getElementById("movie-tabs"));
 
 const movieContent = document.getElementById("movie-content") as HTMLElement;
 const movieCasting = document.getElementById("casting-content") as HTMLElement;
@@ -44,7 +46,7 @@ const ratingCircle: any = rating ? new ProgressBar.Circle(rating, {
  * Render all actors/cast that played in the movie.
  * @param movieData - The movie result data.
  */
-export const renderCast = async (movieData: IMovie): Promise<void> =>
+export const renderCast = async (movieData: IMedia): Promise<void> =>
 {
 	if (!movieData.credits.cast.length)
 	{
@@ -85,7 +87,7 @@ export const renderCast = async (movieData: IMovie): Promise<void> =>
  * Render extra infos aside.
  * @param movieData - The movie result data.
  */
-export const renderAside = async (movieData: IMovie): Promise<void> =>
+export const renderAside = async (movieData: IMedia): Promise<void> =>
 {
 	const dollarFormater: Intl.NumberFormat = new Intl.NumberFormat("en-US", {
 		style: "currency",
@@ -114,7 +116,7 @@ export const renderAside = async (movieData: IMovie): Promise<void> =>
  * Render the movie trailer using YT Player.
  * @param movieData - The movie result data.
  */
-export const renderTrailer = async (movieData: IMovie): Promise<void> =>
+export const renderTrailer = async (movieData: IMedia): Promise<void> =>
 {
 	const trailer: IVideo = movieData.videos.results[0];
 	if (!trailer)
@@ -138,17 +140,18 @@ export const renderMovie = async (): Promise<void> =>
 	// query movie content data
 	const query: ParsedUrlQuery = parse(location.search);
 	const movieId: number = parseInt(query["?id"] as string, 10);
-	const data: IMovie = await queryMovie(movieId);
+	const data: IMedia = await queryMovie(movieId);
 
 	// movie poster & background
 	const bg: string = data.backdrop_path 
-		? `https://image.tmdb.org/t/p/w400${data.backdrop_path}` 
+		? `https://image.tmdb.org/t/p/original${data.backdrop_path}` 
 		: "./src/assets/images/empty_portrait.webp";
 	const lbg = "linear-gradient(rgba(0, 100, 200, 0.8), rgba(7, 0, 93, 0.8))";
 	movieContent.setAttribute("style", `background: ${lbg}, url(${bg})`);
 	poster.src = data.poster_path 
 		? `https://image.tmdb.org/t/p/w400${data.poster_path}` 
 		: "./src/assets/images/empty_portrait.webp";
+	M.Materialbox.init(poster);
 
 	// movie title & description
 	title.innerText = data.title;

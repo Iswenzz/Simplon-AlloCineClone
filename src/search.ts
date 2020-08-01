@@ -1,6 +1,6 @@
 import "./assets/scss/search.scss";
 import { queryMovies } from "./index";
-import { IMovie } from "moviedb";
+import { IMedia } from "moviedb";
 import { ParsedUrlQuery, parse } from "querystring";
 
 const cardContainer = document.getElementById("card-container") as HTMLElement;
@@ -35,7 +35,7 @@ export const renderCardContainer = async (): Promise<void> =>
 				? `"${search.toUpperCase()}" on Allociné` : "Search on Allociné";
 		
 		// render cards
-		const data: IMovie[] = await queryMovies(search);
+		const data: IMedia[] = await queryMovies(search);
 		renderCards(data);
 	}
 };
@@ -44,7 +44,7 @@ export const renderCardContainer = async (): Promise<void> =>
  * Create all cards elements.
  * @param data - The movie data array.
  */
-export const renderCards = (data: IMovie[]): void =>
+export const renderCards = (data: IMedia[]): void =>
 {
 	if (!cardContainer)
 		return;
