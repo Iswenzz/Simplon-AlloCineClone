@@ -3,14 +3,12 @@ import "./assets/scss/index.scss";
 import axios, { AxiosResponse } from "axios";
 import autocomplete, { AutocompleteItem } from "autocompleter";
 import { apiKey } from "./config/key";
-import { renderCardContainer } from "./cards";
-import { renderMovie } from "./movie";
 import { IMovie, MovieResponse, PeopleImageResponse } from "moviedb";
+import { renderCardContainer } from "./search";
+import { renderMovie } from "./movie";
 
 M.AutoInit();
-export const cardContainer = document.getElementById("card-container") as HTMLElement;
 export const searchBox = document.getElementById("search") as HTMLInputElement;
-export const searchHeader = document.getElementById("header-title") as HTMLHeadingElement;
 
 export interface AutocompleteMovieItem extends AutocompleteItem
 {
@@ -24,7 +22,7 @@ export interface AutocompleteMovieItem extends AutocompleteItem
 searchBox.addEventListener("keydown", (e: KeyboardEvent) =>
 {
 	if (e.keyCode === 13)
-		window.location.href = `index.html?search=${(e.target as HTMLInputElement).value}`;
+		window.location.href = `search.html?search=${(e.target as HTMLInputElement).value}`;
 });
 
 /**

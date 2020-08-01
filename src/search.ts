@@ -1,6 +1,10 @@
-import { cardContainer, queryMovies, searchHeader } from "./index";
+import "./assets/scss/search.scss";
+import { queryMovies } from "./index";
 import { IMovie } from "moviedb";
 import { ParsedUrlQuery, parse } from "querystring";
+
+const cardContainer = document.getElementById("card-container") as HTMLElement;
+const searchHeader = document.getElementById("header-title") as HTMLHeadingElement;
 
 /**
  * When clicking on a card image/title callback.
@@ -37,7 +41,7 @@ export const renderCardContainer = async (): Promise<void> =>
 };
 
 /**
- * Create all DOM cards elements.
+ * Create all cards elements.
  * @param data - The movie data array.
  */
 export const renderCards = (data: IMovie[]): void =>
