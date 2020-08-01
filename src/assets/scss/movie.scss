@@ -96,6 +96,11 @@
 
 			.card-image {
 				border-radius: 1em !important;
+
+				img {
+					width: 150px !important;
+					height: 225px !important;
+				}
 			}
 		}
 	}

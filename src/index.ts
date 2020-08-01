@@ -11,15 +11,21 @@ M.AutoInit();
 export const cardContainer = document.getElementById("card-container") as HTMLElement;
 const searchHeader = document.getElementById("header-title") as HTMLHeadingElement;
 
+export interface AutocompleteMovieItem extends AutocompleteItem
+{
+	id: number,
+	poster?: string,
+}
+
 /**
  * Search bar autocomplete configuration.
  */
-autocomplete({
+autocomplete<AutocompleteMovieItem>({
 	input: document.getElementById("search") as HTMLInputElement,
 	minLength: 2,
 	preventSubmit: true,
 	className: "search-dropdown white z-depth-2",
-	fetch: async (text: string, update: (items: false | AutocompleteItem[]) => void) => 
+	fetch: async (text: string, update: (items: false | AutocompleteMovieItem[]) => void) => 
 	{
 		text = text.toLowerCase();
 
@@ -34,19 +40,30 @@ autocomplete({
 			renderCards(movies);
 
 		// update autocompleter data
-		const movieNames: AutocompleteItem[] = movies.map((m: IMovie) => ({
+		const movieNames: AutocompleteMovieItem[] = movies.map((m: IMovie) => ({
+			id: m.id,
 			label: m.title,
-			group: null
-		}));
+			poster: m.poster_path,
+			group: null,
+		})).slice(0, 10);
 		update(movieNames);
 	},
-	render: (item: AutocompleteItem) => 
+	render: (item: AutocompleteMovieItem) => 
 	{
-		const div = document.createElement("div");
-		div.textContent = item as string;
+		const div: HTMLDivElement = document.createElement("div");
+		const img: HTMLImageElement = document.createElement("img");
+		const p: HTMLParagraphElement = document.createElement("p");
+
+		img.src = item.poster 
+			? `https://image.tmdb.org/t/p/w400${item.poster}` 
+			: "./src/assets/images/empty_portrait.webp";
+		p.innerText = item.label;
+
+		div.classList.add("autocomplete-item");
+		div.append(img, p);
 		return div;
 	},
-	onSelect: () =>
+	onSelect: (item: AutocompleteMovieItem) =>
 	{
 		// TODO
 	}

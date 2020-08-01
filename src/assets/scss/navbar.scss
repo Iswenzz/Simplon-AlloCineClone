@@ -10,6 +10,17 @@
 	}
 }
 
+.autocomplete-item {
+	display: flex;
+	flex-direction: row;
+
+	img {
+		margin-right: 1em;
+		width: 44px !important;
+		height: 64px !important;
+	}
+}
+
 .search-dropdown {
 	background-color: rgba($color: white, $alpha: 0.9) !important;
 	z-index: 100;

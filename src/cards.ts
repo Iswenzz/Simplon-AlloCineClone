@@ -35,7 +35,6 @@ export const renderCards = (data: IMovie[]): void =>
 		img.src = c.poster_path 
 			? `https://image.tmdb.org/t/p/w400${c.poster_path}` 
 			: "./src/assets/images/empty_portrait.webp";
-		img.classList.add("responsive-img");
 		img.setAttribute("data-id", c.id.toString());
 
 		// Card header
@@ -56,15 +55,13 @@ export const renderCards = (data: IMovie[]): void =>
 		if (descStr.length > 200)
 			descStr = descStr.substr(0, 199) + "...";
 		desc.innerText = descStr;
-		cardBody.appendChild(cardBodyAction);
-		cardBody.appendChild(desc);
+		cardBody.append(cardBodyAction, desc);
 		
 		// Card content
 		card.classList.add("card", "grey", "darken-4");
 		cardHeader.classList.add("class-image", "waves-effect", "waves-light");
-		card.appendChild(cardHeader);
 		cardBody.classList.add("card-content");
-		card.appendChild(cardBody);
+		card.append(cardHeader, cardBody);
 
 		cardContainer.appendChild(card);
 	}

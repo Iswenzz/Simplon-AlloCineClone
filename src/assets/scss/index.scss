@@ -20,11 +20,13 @@
 
 	article {
 		margin: 1em;
-		max-width: 15em;
-		min-width: 15em;
+		max-width: 240px !important;
+		min-width: 240px !important;
 
 		header {
 			img {
+				width: 240px !important;
+				height: 350px !important;
 				border: 1px solid black;
 			}
 		}
@@ -36,6 +38,12 @@
 				cursor: pointer;
 				font-size: 1.4em;
 				font-weight: 400;
+			}
+		}
+
+		.card-action {
+			a {
+				word-wrap: break-word;
 			}
 		}
 	}

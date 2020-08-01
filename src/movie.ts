@@ -46,6 +46,13 @@ const ratingCircle: any = rating ? new ProgressBar.Circle(rating, {
  */
 export const renderCast = async (movieData: IMovie): Promise<void> =>
 {
+	if (!movieData.credits.cast.length)
+	{
+		movieCasting.textContent = "We don't have any cast added to this movie.";
+		movieCasting.className = "";
+		return;
+	}
+
 	const limit: boolean = movieData.credits.cast.length > 10;
 	for (let i = 0; i < (limit ? 10 : movieData.credits.cast.length); i++)
 	{
@@ -68,10 +75,8 @@ export const renderCast = async (movieData: IMovie): Promise<void> =>
 		cardDesc.innerText = c.character;
 		
 		cardHeader.appendChild(cardImage);
-		cardBody.appendChild(cardTitle);
-		cardBody.appendChild(cardDesc);
-		card.appendChild(cardHeader);
-		card.appendChild(cardBody);
+		cardBody.append(cardTitle, cardDesc);
+		card.append(cardHeader, cardBody);
 		movieCasting.appendChild(card);
 	}
 };
@@ -87,12 +92,15 @@ export const renderAside = async (movieData: IMovie): Promise<void> =>
 		currency: "USD",
 	});
 
-	status.innerText = movieData.status;
+	status.innerText = movieData.status ?? "-";
 	language.innerText = movieData.spoken_languages[0] 
-		? movieData.spoken_languages[0].name : "Unknown";
-	budget.innerText = dollarFormater.format(movieData.budget);
-	revenue.innerText = dollarFormater.format(movieData.revenue);
+		? movieData.spoken_languages[0].name : "-";
+	budget.innerText = movieData.budget ? dollarFormater.format(movieData.budget) : "-";
+	revenue.innerText = movieData.revenue ? dollarFormater.format(movieData.revenue) : "-";
 	
+	if (!movieData.keywords.keywords.length)
+		keywords.innerText = "No keywords has been added.";
+
 	for (const word of movieData.keywords.keywords)
 	{
 		const k: HTMLLIElement = document.createElement("li");
@@ -109,7 +117,11 @@ export const renderAside = async (movieData: IMovie): Promise<void> =>
 export const renderTrailer = async (movieData: IMovie): Promise<void> =>
 {
 	const trailer: IVideo = movieData.videos.results[0];
-	if (!trailer) return;
+	if (!trailer)
+	{
+		document.getElementById("movie-video").innerText = "No videos has been added.";
+		return;
+	}
 
 	const player: any = YouTubePlayer("movie-video");
 	player.loadVideoById(trailer.key);
@@ -146,7 +158,8 @@ export const renderMovie = async (): Promise<void> =>
 	// movie date & genre & duration
 	date.setAttribute("datetime", data.release_date);
 	date.innerText = new Date(data.release_date).toLocaleDateString();
-	genre.innerText = data.genres.map(g => g.name).join(", ");
+	const genres: string = data.genres.map(g => g.name).join(", ");
+	genre.innerText = genres.length ? genres : "Unknown";
 	const hours: number = Math.floor(data.runtime / 60);
 	const minutes: number = data.runtime % 60;
 	duration.innerText = hours > 0 ? `${hours}h ${minutes}m` : `${minutes}m`;
