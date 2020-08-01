@@ -3,9 +3,9 @@ import "./assets/scss/index.scss";
 import axios, { AxiosResponse } from "axios";
 import autocomplete, { AutocompleteItem } from "autocompleter";
 import { apiKey } from "./config/key";
-import { IMedia, MediaResponse, PeopleImageResponse } from "moviedb";
+import { IMedia, MediaResponse, PeopleImageResponse, MediaType, ITv, IMovie } from "moviedb";
 import { renderCardContainer } from "./search";
-import { renderMovie } from "./movie";
+import { renderMedia } from "./media";
 
 M.Tabs.init(document.getElementById("nav-tabs"));
 M.Parallax.init(document.getElementById("plx"));
@@ -14,9 +14,10 @@ export const upcomingCarousel = document.getElementById("upcoming-carousel") as 
 export const trendingCarousel = document.getElementById("trending-carousel") as HTMLDivElement;
 export const parallaxBg = document.getElementById("plx-bg") as HTMLImageElement;
 
-export interface AutocompleteMovieItem extends AutocompleteItem
+export interface AutocompleteMediaItem extends AutocompleteItem
 {
 	id: number,
+	media_type: string,
 	poster?: string,
 }
 
@@ -32,26 +33,27 @@ searchBox.addEventListener("keydown", (e: KeyboardEvent) =>
 /**
  * Search bar autocomplete configuration.
  */
-autocomplete<AutocompleteMovieItem>({
+autocomplete<AutocompleteMediaItem>({
 	input: searchBox,
 	minLength: 2,
 	preventSubmit: true,
 	className: "search-dropdown white z-depth-2",
-	fetch: async (text: string, update: (items: false | AutocompleteMovieItem[]) => void) => 
+	fetch: async (text: string, update: (items: false | AutocompleteMediaItem[]) => void) => 
 	{
 		text = text.toLowerCase();
 		
 		// update autocompleter data
-		const movies: IMedia[] = await queryMovies(text);
-		const movieNames: AutocompleteMovieItem[] = movies?.map((m: IMedia) => ({
+		const medias: IMedia[] = await queryMedias(text, "all");
+		const mediaNames: AutocompleteMediaItem[] = medias?.map((m: IMovie & ITv) => ({
 			id: m.id,
-			label: m.title,
+			label: m.title ?? m.name,
 			poster: m.poster_path,
+			media_type: m.media_type,
 			group: null,
 		})).slice(0, 10);
-		update(movieNames);
+		update(mediaNames);
 	},
-	render: (item: AutocompleteMovieItem) => 
+	render: (item: AutocompleteMediaItem) => 
 	{
 		const div: HTMLDivElement = document.createElement("div");
 		const img: HTMLImageElement = document.createElement("img");
@@ -64,7 +66,7 @@ autocomplete<AutocompleteMovieItem>({
 
 		div.classList.add("autocomplete-item");
 		div.append(img, p);
-		div.addEventListener("click", () => window.location.href = `movie.html?id=${item.id}`);
+		div.addEventListener("click", () => window.location.href = `media.html?id=${item.id}&type=${item.media_type}`);
 		return div;
 	},
 	onSelect: () => null
@@ -92,15 +94,15 @@ export const queryPersonImage = async (id: number): Promise<string> =>
 };
 
 /**
- * Query a movie from its id.
- * @param id - The movie ID.
+ * Query a media from its id.
+ * @param id - The media ID.
  */
-export const queryMovie = async (id: number): Promise<IMedia | null> =>
+export const queryMedia = async (id: number, mediaType: MediaType): Promise<IMedia | null> =>
 {
 	try
 	{
 		const res: AxiosResponse<IMedia> = await axios.get(
-			`https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&language=en-EN&append_to_response=credits,videos,keywords`);
+			`https://api.themoviedb.org/3/${mediaType}/${id}?api_key=${apiKey}&language=en-EN&append_to_response=credits,videos,keywords`);
 		return res.data;
 	}
 	catch (e) 
@@ -111,17 +113,17 @@ export const queryMovie = async (id: number): Promise<IMedia | null> =>
 };
 
 /**
- * Query all movies that contains the specified string.
- * @param name - The movie query string.
+ * Query all medias that contains the specified string.
+ * @param name - The media query string.
  */
-export const queryMovies = async (name: string): Promise<IMedia[] | null> =>
+export const queryMedias = async (name: string, mediaType: MediaType): Promise<IMedia[] | null> =>
 {
 	try
 	{
 		const res: AxiosResponse<MediaResponse> = await axios.get(
-			`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&language=en-EN&query=${name}&page=1&include_adult=false`);
-		const data: IMedia[] = res.data.results.sort((a: IMedia, b: IMedia) => 
-			a.title.localeCompare(b.title));
+			`https://api.themoviedb.org/3/search/multi?api_key=${apiKey}&language=en-EN&query=${name}&page=1&include_adult=false`);
+		const data: IMedia[] = res.data.results
+			.filter(m => mediaType === "all" ? true : m.media_type === mediaType);
 
 		return data;
 	}
@@ -135,13 +137,13 @@ export const queryMovies = async (name: string): Promise<IMedia[] | null> =>
 /**
  * Query the latest movies in theatres.
  */
-export const queryLatest = async (): Promise<IMedia[] | null> =>
+export const queryLatest = async (): Promise<IMovie[] | null> =>
 {
 	try
 	{
 		const res: AxiosResponse<MediaResponse> = await axios.get(
 			`https://api.themoviedb.org/3/movie/upcoming?api_key=${apiKey}&language=en-EN&page=1`);
-		return res.data.results;
+		return res.data.results as IMovie[];
 	}
 	catch (e) 
 	{
@@ -159,7 +161,6 @@ export const queryTrending = async (): Promise<IMedia[] | null> =>
 	{
 		const res: AxiosResponse<MediaResponse> = await axios.get(
 			`https://api.themoviedb.org/3/trending/all/week?api_key=${apiKey}`);
-		console.log(res);
 		return res.data.results;
 	}
 	catch (e) 
@@ -170,23 +171,23 @@ export const queryTrending = async (): Promise<IMedia[] | null> =>
 };
 
 /**
- * Render movies/series to a materialize carousel.
- * @param data - The data to render.
+ * Render medias to a materialize carousel.
+ * @param mediaData - The data to render.
  * @param carousel - The carousel element.
  */
-export const renderToCarousel = async (data: IMedia[], carousel: HTMLElement): Promise<void> =>
+export const renderToCarousel = async (mediaData: IMedia[], carousel: HTMLElement): Promise<void> =>
 {
-	for (const m of data)
+	for (const data of mediaData)
 	{
 		const item: HTMLAnchorElement = document.createElement("a");
 		const img: HTMLImageElement = document.createElement("img");
 
-		img.src = m.poster_path 
-			? `https://image.tmdb.org/t/p/w400${m.poster_path}` 
+		img.src = data.poster_path 
+			? `https://image.tmdb.org/t/p/w400${data.poster_path}` 
 			: "./src/assets/images/empty_portrait.webp";
 
 		item.classList.add("carousel-item");
-		item.href = `${m.media_type ?? "movie"}.html?id=${m.id}`;
+		item.href = `media.html?id=${data.id}&type=${data.media_type ?? "movie"}`;
 		item.appendChild(img);
 
 		carousel.appendChild(item);
@@ -208,8 +209,7 @@ export const renderLatest = async (): Promise<void> =>
 	if(!upcomingCarousel)
 		return;
 
-	const movies: IMedia[] = await queryLatest();
-	renderToCarousel(movies, upcomingCarousel);
+	renderToCarousel(await queryLatest(), upcomingCarousel);
 };
 
 /**
@@ -232,4 +232,4 @@ export const renderTrending = async (): Promise<void> =>
 renderLatest();
 renderTrending();
 renderCardContainer();
-renderMovie();
+renderMedia();

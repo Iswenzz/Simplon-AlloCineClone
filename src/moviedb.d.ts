@@ -1,5 +1,7 @@
 declare module "moviedb"
 {
+	export type MediaType = "movie" | "tv" | "all";
+
 	export interface MediaResponse
 	{
 		page: number,
@@ -10,7 +12,8 @@ declare module "moviedb"
 
 	export interface KeywordsResponse
 	{
-		keywords: IKeyword[]
+		keywords?: IKeyword[],
+		results?: IKeyword[]
 	}
 
 	export interface PeopleImageResponse
@@ -32,33 +35,59 @@ declare module "moviedb"
 		results: IVideo[]
 	}
 
+	export interface IMovie extends IMedia
+	{
+		title: string,
+		budget?: number,
+		revenue?: number,
+		spoken_languages?: ILanguage[],
+		video: boolean,
+		tagline?: string,
+	}
+
+	export interface ITv extends IMedia
+	{
+		name: string,
+		first_air_date?: string,
+		last_air_date?: string,
+		number_of_episodes: number,
+		number_of_seasons: number,
+		seasons?: ISeason[],
+		type?: string
+	}
+
 	export interface IMedia
 	{
 		adult?: boolean,
 		backdrop_path?: string,
-		budget?: number,
 		genres?: IGenre[]
 		id: number,
 		homepage?: string,
 		original_language?: string,
 		original_title?: string,
-		title?: string,
 		overview?: string,
 		popularity: number,
 		poster_path?: string,
-		tagline?: string,
-		video?: boolean,
 		videos?: VideosResponse,
 		vote_average?: number,
 		vote_count?: number,
 		release_date?: string,
-		revenue?: number,
 		runtime?: number,
 		status?: string,
-		spoken_languages?: ILanguage[],
 		credits?: CreditsResponse,
 		keywords?: KeywordsResponse,
 		media_type?: string
+	}
+
+	export interface ISeason
+	{
+		id: number,
+		air_date?: string,
+		episode_count?: number,
+		name?: string,
+		overview?: string,
+		poster_path?: string,
+		season_number: number
 	}
 
 	export interface ILanguage

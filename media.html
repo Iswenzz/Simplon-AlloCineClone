@@ -47,7 +47,7 @@
 
 	<!-- Tabs -->
 	<section class="movietabs nav-content container center">
-		<ul id="movie-tabs" class="tabs transparent darken-4">
+		<ul id="media-tabs" class="tabs transparent darken-4">
 			<li class="tab col s3"><a href="#test1">Overview</a></li>
 			<li class="tab col s3"><a href="#test2">Media</a></li>
 			<li class="tab col s3"><a href="#test3">Fandom</a></li>
@@ -55,65 +55,67 @@
 		</ul>
 	</section>
 
-	<!-- Movie -->
-	<section id="movie-content" class="movieinfo z-depth-2">
-		<div class="container row">
-			<div class="col s12 m4">
-				<img class="materialboxed responsive-img" id="movie-poster" alt="movie poster">
-			</div>
-			<div class="col s12 m8">
-				<h1 id="movie-title"></h1>
-				<div class="movieinfo-span">
-					<time id="movie-date"></time> •
-					<span id="movie-genre"></span> •
-					<span id="movie-duration"></span>
+	<main id="media-container" class="media">
+		<!-- Movie -->
+		<section id="media-content" class="movieinfo z-depth-2">
+			<div class="container row">
+				<div class="col s12 m4">
+					<img class="materialboxed responsive-img" id="media-poster" alt="movie poster">
 				</div>
-				<div class="row">
-					<div class="col l2 m3 s4">
-						<div id="movie-rating" class="movieinfo-rating"></div>
+				<div class="col s12 m8">
+					<h1 id="media-title"></h1>
+					<div class="movieinfo-span">
+						<time id="media-date"></time> •
+						<span id="media-genre"></span> •
+						<span id="media-duration"></span>
 					</div>
-					<h5 class="col l6 m7 s8">User Rating</h5>
+					<div class="row">
+						<div class="col l2 m3 s4">
+							<div id="media-rating" class="movieinfo-rating"></div>
+						</div>
+						<h5 class="col l6 m7 s8">User Rating</h5>
+					</div>
+					<div id="media-description"></div>
 				</div>
-				<div id="movie-description"></div>
 			</div>
-		</div>
-	</section>
+		</section>
 
-	<!-- Infos -->
-	<main class="container-xl row">
-		<aside class="aside col s12 m3 push-m9">
-			<div class="aside-divs">
-				<h6>Status</h6>
-				<p id="movie-status"></p>
-			</div>
-			<div class="aside-divs">
-				<h6>Original Language</h6>
-				<p id="movie-language"></p>
-			</div>
-			<div class="aside-divs">
-				<h6>Budget</h6>
-				<p id="movie-budget"></p>
-			</div>
-			<div class="aside-divs">
-				<h6>Revenue</h6>
-				<p id="movie-revenue"></p>
-			</div>
-			<div class="aside-divs">
-				<h6>Keywords</h6>
-				<ul class="keywords" id="movie-keywords"></ul>
-			</div>
-		</aside>
-		<section class="infos col s12 m9 pull-m3">
-			<!-- Casting -->
-			<section class="casting">
-				<h2>Top Billed Cast</h2>
-				<section id="casting-content" class="casting-content z-depth-2"></section>
-			</section>
+		<!-- Infos -->
+		<section class="container-xl row">
+			<aside class="aside col s12 m3 push-m9">
+				<div class="aside-divs">
+					<h6>Status</h6>
+					<p id="media-status"></p>
+				</div>
+				<div class="aside-divs">
+					<h6>Original Language</h6>
+					<p id="media-language"></p>
+				</div>
+				<div class="aside-divs">
+					<h6>Budget</h6>
+					<p id="media-budget"></p>
+				</div>
+				<div class="aside-divs">
+					<h6>Revenue</h6>
+					<p id="media-revenue"></p>
+				</div>
+				<div class="aside-divs">
+					<h6>Keywords</h6>
+					<ul class="keywords" id="media-keywords"></ul>
+				</div>
+			</aside>
+			<section class="infos col s12 m9 pull-m3">
+				<!-- Casting -->
+				<section class="casting">
+					<h2>Top Billed Cast</h2>
+					<section id="casting-content" class="casting-content z-depth-2"></section>
+				</section>
 
-			<!-- Video -->
-			<section class="video">
-				<h2>Movie Trailer</h2>
-				<div id="movie-video" class="video-player"></div>
+				<!-- Video -->
+				<section class="video">
+					<h2>Movie Trailer</h2>
+					<div id="media-video" class="video-player"></div>
+				</section>
 			</section>
 		</section>
 	</main>

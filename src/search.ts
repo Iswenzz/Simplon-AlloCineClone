@@ -1,6 +1,6 @@
 import "./assets/scss/search.scss";
-import { queryMovies } from "./index";
-import { IMedia } from "moviedb";
+import { queryMedias } from "./index";
+import { IMedia, IMovie, ITv } from "moviedb";
 import { ParsedUrlQuery, parse } from "querystring";
 
 const cardContainer = document.getElementById("card-container") as HTMLElement;
@@ -13,7 +13,8 @@ const searchHeader = document.getElementById("header-title") as HTMLHeadingEleme
 const selectCard = (e: MouseEvent): void =>
 {
 	const card: HTMLDivElement = e.target as HTMLDivElement;
-	window.location.href = `movie.html?id=${card.getAttribute("data-id")}`;
+	window.location.href = 
+		`media.html?id=${card.getAttribute("data-id")}&type=${card.getAttribute("data-type")}`;
 };
 
 /**
@@ -35,7 +36,7 @@ export const renderCardContainer = async (): Promise<void> =>
 				? `"${search.toUpperCase()}" on Allociné` : "Search on Allociné";
 		
 		// render cards
-		const data: IMedia[] = await queryMovies(search);
+		const data: IMedia[] = await queryMedias(search, "all");
 		renderCards(data);
 	}
 	else if (cardContainer)
@@ -44,19 +45,21 @@ export const renderCardContainer = async (): Promise<void> =>
 
 /**
  * Create all cards elements.
- * @param data - The movie data array.
+ * @param mediaData - The media data array.
  */
-export const renderCards = (data: IMedia[]): void =>
+export const renderCards = (mediaData: IMedia[]): void =>
 {
 	if (!cardContainer)
 		return;
 	cardContainer.innerHTML = "";
 
-	if (!data.length)
+	if (!mediaData.length)
 		cardContainer.innerText = "There are no movies that matched your query.";
 
-	for (const c of data)
+	for (const m of mediaData)
 	{
+		const data = m as IMovie & ITv;
+
 		const card: HTMLElement = document.createElement("article");
 		const cardHeader: HTMLElement = document.createElement("header");
 		const img: HTMLImageElement = document.createElement("img");
@@ -66,26 +69,29 @@ export const renderCards = (data: IMedia[]): void =>
 		const desc: HTMLParagraphElement = document.createElement("p");
 
 		// Card poster
-		img.src = c.poster_path 
-			? `https://image.tmdb.org/t/p/w400${c.poster_path}` 
+		img.src = data.poster_path 
+			? `https://image.tmdb.org/t/p/w400${data.poster_path}` 
 			: "./src/assets/images/empty_portrait.webp";
-		img.setAttribute("data-id", c.id.toString());
+		img.setAttribute("data-id", data.id.toString());
+		img.setAttribute("data-type", data.media_type.toString());
 
 		// Card header
-		cardHeader.setAttribute("data-id", c.id.toString());
+		cardHeader.setAttribute("data-id", data.id.toString());
+		cardHeader.setAttribute("data-type", data.media_type.toString());
 		cardHeader.addEventListener("click", selectCard);
 		cardHeader.appendChild(img);
 
 		// Card title
-		title.setAttribute("data-id", c.id.toString());
+		title.setAttribute("data-id", data.id.toString());
+		title.setAttribute("data-type", data.media_type.toString());
 		title.addEventListener("click", selectCard);
-		title.innerText = c.title;
+		title.innerText = data.title ?? data.name;
 
 		cardBodyAction.classList.add("card-action");
 		cardBodyAction.appendChild(title);
 
 		// Card description
-		let descStr: string = c.overview;
+		let descStr: string = data.overview;
 		if (descStr.length > 200)
 			descStr = descStr.substr(0, 199) + "...";
 		desc.innerText = descStr;
