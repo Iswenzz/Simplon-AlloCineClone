@@ -38,6 +38,8 @@ export const renderCardContainer = async (): Promise<void> =>
 		const data: IMedia[] = await queryMovies(search);
 		renderCards(data);
 	}
+	else if (cardContainer)
+		cardContainer.innerText = "There are no movies that matched your query.";
 };
 
 /**
@@ -49,6 +51,9 @@ export const renderCards = (data: IMedia[]): void =>
 	if (!cardContainer)
 		return;
 	cardContainer.innerHTML = "";
+
+	if (!data.length)
+		cardContainer.innerText = "There are no movies that matched your query.";
 
 	for (const c of data)
 	{
