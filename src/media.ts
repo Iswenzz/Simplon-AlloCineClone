@@ -151,6 +151,7 @@ export const renderMedia = async (): Promise<void> =>
 	const m: IMedia = await queryMedia(mediaId, query["type"] as MediaType);
 	const data = m as IMovie & ITv;
 
+	// query failed
 	if (!data)
 	{
 		mediaContainer.classList.add("center");
@@ -173,6 +174,7 @@ export const renderMedia = async (): Promise<void> =>
 
 	// media title & description
 	title.innerText = data.title ?? data.name;
+	document.title = `${title.innerText} - AlloCinéClone`;
 	description.innerText = data.overview;
 
 	// media date & genre

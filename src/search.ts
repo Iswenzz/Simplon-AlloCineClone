@@ -86,6 +86,7 @@ export const renderCards = (mediaData: IMedia[]): void =>
 		title.setAttribute("data-type", data.media_type.toString());
 		title.addEventListener("click", selectCard);
 		title.innerText = data.title ?? data.name;
+		document.title = `AlloCinéClone Search - ${title.innerText}`;
 
 		cardBodyAction.classList.add("card-action");
 		cardBodyAction.appendChild(title);
