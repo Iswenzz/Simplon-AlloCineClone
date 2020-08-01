@@ -1,5 +1,7 @@
 const path = require("path");
 const StylelintPlugin = require("stylelint-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
 	mode: "development",
@@ -12,6 +14,21 @@ module.exports = {
 		extensions: [ ".tsx", ".jsx", ".ts", ".js" ],
 	},
 	plugins: [
+		new CleanWebpackPlugin({
+			cleanAfterEveryBuildPatterns: ["!*.html"],
+		}),
+		...["index", "media", "search"].map(html => new HtmlWebpackPlugin({
+			filename: `${html}.html`,
+			template: `public/${html}.html`,
+			minify: {
+				collapseWhitespace: true,
+				removeComments: true,
+				removeRedundantAttributes: true,
+				removeScriptTypeAttributes: true,
+				removeStyleLinkTypeAttributes: true,
+				useShortDoctype: true
+			}
+		})),
 		new StylelintPlugin({
 			configFile: ".stylelintrc.json"
 		})
@@ -29,7 +46,7 @@ module.exports = {
 				loader: "eslint-loader"
 			},
 			{	// file loader
-				test: /\.(png|jpe?g|gif)$/i,
+				test: /\.(png|jpe?g|gif|svg)$/i,
 				use: [
 					{
 						loader: "file-loader",
@@ -49,7 +66,10 @@ module.exports = {
 						}
 					},
 					{
-						loader: "sass-loader", options: { sourceMap: true }
+						loader: "sass-loader", 
+						options: { 
+							sourceMap: true
+						}
 					},
 					{
 						loader: "postcss-loader",
