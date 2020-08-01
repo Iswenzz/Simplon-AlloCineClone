@@ -8,10 +8,28 @@ declare module "moviedb"
 		total_results: number
 	}
 
+	export interface MovieKeywordResponse
+	{
+		keywords: IKeyword[]
+	}
+
 	export interface PeopleImageResponse
 	{
 		id: number,
 		profiles: IImage[]
+	}
+
+	export interface MovieCreditsResponse
+	{
+		cast: ICast[],
+		crew: ICrew[],
+		id: number
+	}
+
+	export interface MovieVideosResponse
+	{
+		id: number,
+		results: IVideo[]
 	}
 
 	export interface IMovie
@@ -30,19 +48,22 @@ declare module "moviedb"
 		poster_path?: string,
 		tagline?: string,
 		video?: boolean,
-		videos?: IVideos,
+		videos?: MovieVideosResponse,
 		vote_average?: number,
 		vote_count?: number,
 		release_date?: string,
+		revenue?: number,
 		runtime?: number,
-		credits?: ICredits,
-		keywords?: IKeyword[]
+		status?: string,
+		spoken_languages?: ILanguage[],
+		credits?: MovieCreditsResponse,
+		keywords?: MovieKeywordResponse
 	}
 
-	export interface IVideos
+	export interface ILanguage
 	{
-		id: number,
-		results: IVideo[]
+		iso_639_1: string,
+		name: string
 	}
 
 	export interface IVideo
@@ -66,13 +87,6 @@ declare module "moviedb"
 		vote_average: number,
 		vote_count: number,
 		width: number
-	}
-
-	export interface ICredits
-	{
-		cast: ICast[],
-		crew: ICrew[],
-		id: number
 	}
 
 	export interface IGenre

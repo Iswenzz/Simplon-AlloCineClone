@@ -2,6 +2,48 @@
 @import "./navbar";
 @import "./footer";
 
+.keywords {
+	list-style: none;
+
+	li {
+		display: inline-block;
+		margin: 0.5em;
+		border-radius: 1em;
+		background-color: rgba($color: indigo, $alpha: 0.3);
+		padding: 0.3em 1em;
+		color: rgba($color: whitesmoke, $alpha: 0.9);
+		cursor: pointer;
+	}
+}
+
+.infos {
+	padding: 0 1em;
+}
+
+.aside {
+	#{&}-divs {
+		margin: 1.5em 0;
+
+		h6, p {
+			margin: 0;
+		}
+
+		h6 {
+			font-size: 1.1em;
+			font-weight: bold;
+		}
+
+		p {
+			font-size: 0.9em;
+			color: gainsboro;
+		}
+
+		@include media(tablet_mobile, portrait) {
+			text-align: center;
+		}
+	}
+}
+
 .video {
 	margin-bottom: 3em;
 	

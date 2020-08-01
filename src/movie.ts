@@ -16,6 +16,12 @@ const duration = document.getElementById("movie-duration") as HTMLDivElement;
 const rating = document.getElementById("movie-rating") as HTMLDivElement;
 const description = document.getElementById("movie-description") as HTMLDivElement;
 
+const status = document.getElementById("movie-status") as HTMLParagraphElement;
+const language = document.getElementById("movie-language") as HTMLParagraphElement;
+const budget = document.getElementById("movie-budget") as HTMLParagraphElement;
+const revenue = document.getElementById("movie-revenue") as HTMLParagraphElement;
+const keywords = document.getElementById("movie-keywords") as HTMLDivElement;
+
 const ratingCircle: any = rating ? new ProgressBar.Circle(rating, {
 	strokeWidth: 10,
 	easing: "easeInOut",
@@ -71,6 +77,32 @@ export const renderCast = async (movieData: IMovie): Promise<void> =>
 };
 
 /**
+ * Render extra infos aside.
+ * @param movieData - The movie result data.
+ */
+export const renderAside = async (movieData: IMovie): Promise<void> =>
+{
+	const dollarFormater: Intl.NumberFormat = new Intl.NumberFormat("en-US", {
+		style: "currency",
+		currency: "USD",
+	});
+
+	status.innerText = movieData.status;
+	language.innerText = movieData.spoken_languages[0] 
+		? movieData.spoken_languages[0].name : "Unknown";
+	budget.innerText = dollarFormater.format(movieData.budget);
+	revenue.innerText = dollarFormater.format(movieData.revenue);
+	
+	for (const word of movieData.keywords.keywords)
+	{
+		const k: HTMLLIElement = document.createElement("li");
+		k.classList.add("z-depth-2", "waves-effect", "waves-light");
+		k.innerText = word.name;
+		keywords.appendChild(k);
+	}
+};
+
+/**
  * Render the movie trailer using YT Player.
  * @param movieData - The movie result data.
  */
@@ -95,6 +127,7 @@ export const renderMovie = async (): Promise<void> =>
 	const query: ParsedUrlQuery = parse(location.search);
 	const movieId: number = parseInt(query["?id"] as string, 10);
 	const data: IMovie = await queryMovie(movieId);
+	console.log(data);
 
 	// movie poster & background
 	const bg: string = data.backdrop_path 
@@ -121,6 +154,7 @@ export const renderMovie = async (): Promise<void> =>
 	// movie rating
 	ratingCircle.animate(data.vote_average / 10);
 
-	await renderTrailer(data);
-	await renderCast(data);
+	renderTrailer(data);
+	renderCast(data);
+	renderAside(data);
 };
