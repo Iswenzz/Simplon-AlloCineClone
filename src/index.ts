@@ -21,13 +21,19 @@ export interface AutocompleteMediaItem extends AutocompleteItem
 	poster?: string,
 }
 
+export interface QueryMediaOptions 
+{
+	type?: MediaType,
+	page?: number | string
+}
+
 /**
  * Searchbox keydown event callback.
  */
 searchBox.addEventListener("keydown", (e: KeyboardEvent) =>
 {
 	if (e.keyCode === 13)
-		window.location.href = `search.html?search=${(e.target as HTMLInputElement).value}`;
+		window.location.href = `search.html?search=${(e.target as HTMLInputElement).value}&page=1`;
 });
 
 /**
@@ -43,8 +49,10 @@ autocomplete<AutocompleteMediaItem>({
 		text = text.toLowerCase();
 		
 		// update autocompleter data
-		const medias: IMedia[] = await queryMedias(text, "all");
-		const mediaNames: AutocompleteMediaItem[] = medias?.map((m: IMovie & ITv) => ({
+		const medias: MediaResponse = await queryMedias(text, {
+			type: "multi"
+		});
+		const mediaNames: AutocompleteMediaItem[] = medias.results?.map((m: IMovie & ITv) => ({
 			id: m.id,
 			label: m.title ?? m.name,
 			poster: m.poster_path,
@@ -115,17 +123,15 @@ export const queryMedia = async (id: number, mediaType: MediaType): Promise<IMed
 /**
  * Query all medias that contains the specified string.
  * @param name - The media query string.
+ * @param options - Query options (page, media_type).
  */
-export const queryMedias = async (name: string, mediaType: MediaType): Promise<IMedia[] | null> =>
+export const queryMedias = async (name: string, options: QueryMediaOptions): Promise<MediaResponse | null> =>
 {
 	try
 	{
 		const res: AxiosResponse<MediaResponse> = await axios.get(
-			`https://api.themoviedb.org/3/search/multi?api_key=${apiKey}&language=en-EN&query=${name}&page=1&include_adult=false`);
-		const data: IMedia[] = res.data.results
-			.filter(m => mediaType === "all" ? true : m.media_type === mediaType);
-
-		return data;
+			`https://api.themoviedb.org/3/search/${options.type ?? "multi"}?api_key=${apiKey}&language=en-EN&query=${name}&page=${options.page ?? 1}&include_adult=false`);
+		return res.data;
 	}
 	catch (e) 
 	{

@@ -10,6 +10,23 @@
 	}
 }
 
+.pagination {
+	margin-bottom: 3em !important;
+	display: flex !important;
+	justify-content: center;
+	align-items: center;
+	
+	li {
+		a {
+			color: gainsboro !important;
+		}
+
+		i {
+			color: silver !important;
+		}
+	}
+}
+
 .cardbox {
 	display: flex;
 	flex-direction: row;

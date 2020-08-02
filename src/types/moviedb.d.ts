@@ -1,6 +1,6 @@
 declare module "moviedb"
 {
-	export type MediaType = "movie" | "tv" | "all";
+	export type MediaType = "movie" | "tv" | "multi";
 
 	export interface MediaResponse
 	{

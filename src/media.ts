@@ -1,5 +1,5 @@
 import "./assets/scss/media.scss";
-import { parse, ParsedUrlQuery } from "querystring";
+import * as qs from "querystring";
 import ProgressBar from "progressbar.js";
 import { queryMedia, queryPersonImage } from "./index";
 import YouTubePlayer from "youtube-player";
@@ -146,8 +146,8 @@ export const renderMedia = async (): Promise<void> =>
 		return;
 	
 	// query media content data
-	const query: ParsedUrlQuery = parse(location.search);
-	const mediaId: number = parseInt(query["?id"] as string, 10);
+	const query: qs.ParsedUrlQuery = qs.parse(location.search.replace("?", ""));
+	const mediaId: number = parseInt(query["id"] as string, 10);
 	const m: IMedia = await queryMedia(mediaId, query["type"] as MediaType);
 	const data = m as IMovie & ITv;
 
