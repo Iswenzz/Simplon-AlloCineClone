@@ -2,6 +2,7 @@ const path = require("path");
 const StylelintPlugin = require("stylelint-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
 	mode: "development",
@@ -17,6 +18,7 @@ module.exports = {
 		new CleanWebpackPlugin({
 			cleanStaleWebpackAssets: false,
 		}),
+		new MiniCssExtractPlugin(),
 		...["index", "media", "search"].map(html => new HtmlWebpackPlugin({
 			filename: `${html}.html`,
 			template: `public/${html}.html`,
@@ -53,11 +55,11 @@ module.exports = {
 				test: /\.html$/i,
 				loader: "html-loader",
 			},
-			{	// style & css & sass & postcss loader
+			{	// css extract & css & sass & postcss loader
 				test: /\.s[ac]ss$/i,
 				use: [
 					{ 
-						loader: "style-loader" 
+						loader: MiniCssExtractPlugin.loader,
 					},
 					{
 						loader: "css-loader", 
