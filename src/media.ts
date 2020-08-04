@@ -68,13 +68,19 @@ export const renderCast = async (mediaData: IMedia): Promise<void> =>
 		const cardTitle: HTMLHeadingElement = document.createElement("h4");
 		const cardDesc: HTMLParagraphElement = document.createElement("p");
 
+		card.setAttribute("itemtype", "http://schema.org/Person");
+		card.setAttribute("itemprop", "actor");
+		card.setAttribute("itemscope", "");
+
 		card.classList.add("card", "grey", "darken-4");
 		cardHeader.classList.add("card-image", "waves-effect", "waves-light");
 		cardBody.classList.add("card-content");
 
 		const imgUrl: string = await queryPersonImage(c.id);
 		cardImage.src = imgUrl ? imgUrl : "";
+		cardImage.setAttribute("itemprop", "image");
 		cardTitle.innerText = c.name;
+		cardTitle.setAttribute("itemprop", "name");
 		cardDesc.innerText = c.character;
 		
 		cardHeader.appendChild(cardImage);
@@ -193,9 +199,26 @@ export const renderMedia = async (): Promise<void> =>
 		duration.innerText = hours > 0 ? `${hours}h ${minutes}m` : `${minutes}m`;
 	}
 
+	// SEO
+	document.head.innerHTML += `
+		<meta name="theme-color" content="#2A2A2A">
+		<meta name="title" content="${data.title ?? data.name}">
+		<meta name="description" content="${data.overview}">
+		<meta property="og:type" content="video.movie">
+		<meta property="og:url" content="${data.homepage}">
+		<meta property="og:title" content="${data.title ?? data.name}">
+		<meta property="og:description" content="${data.overview}">
+		<meta property="og:image" content="${bg}">
+		<meta property="twitter:card" content="${bg}">
+		<meta property="twitter:url" content="${data.homepage}">
+		<meta property="twitter:title" content="${data.title ?? data.name}">
+		<meta property="twitter:description" content="${data.overview}">
+		<meta property="twitter:image" content="${bg}">
+	`;
+
 	// media rating
 	ratingCircle.animate(data.vote_average / 10);
-
+	
 	renderTrailer(data);
 	renderCast(data);
 	renderAside(data);

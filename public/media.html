@@ -40,13 +40,13 @@
 
 	<main id="media-container" class="media">
 		<!-- Movie -->
-		<section id="media-content" class="movieinfo z-depth-2">
+		<section id="media-content" class="movieinfo z-depth-2" itemscope itemtype="http://schema.org/Movie">
 			<div class="container row">
 				<div class="col s12 m4">
 					<img class="materialboxed responsive-img" id="media-poster" alt="movie poster">
 				</div>
 				<div class="col s12 m8">
-					<h1 id="media-title"></h1>
+					<h1 id="media-title" itemprop="name"></h1>
 					<div class="movieinfo-span">
 						<time id="media-date"></time> •
 						<span id="media-genre"></span> •
@@ -58,7 +58,7 @@
 						</div>
 						<h5 class="col l6 m7 s8">User Rating</h5>
 					</div>
-					<div id="media-description"></div>
+					<div id="media-description" itemprop="description"></div>
 				</div>
 			</div>
 		</section>
