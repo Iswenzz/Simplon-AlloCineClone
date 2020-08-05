@@ -65,13 +65,14 @@ export class MediaCard
 			? `https://image.tmdb.org/t/p/w400${media.poster_path}` 
 			: require("./assets/images/empty_portrait.webp").default;
 
-
 		// Card title
-		this.titleElem.innerText = media.title ?? media.name;
+		this.title = media.title ?? media.name;
+		this.titleElem.innerText = this.title;
 		document.title = `AlloCinéClone Search - ${this.title}`;
 
 		// Card description
-		let descStr: string = media.overview ?? "";
+		this.description = media.overview ?? "";
+		let descStr: string = this.description;
 		if (descStr.length > 200)
 			descStr = descStr.substr(0, 199) + "...";
 		this.descriptionElem.innerText = descStr;
