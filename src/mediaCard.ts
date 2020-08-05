@@ -52,7 +52,7 @@ export class MediaCard
 	 * Initialize the media card properties/elements with the specified media data.
 	 * @param media - The media data.
 	 */
-	public initializeData(media: IMovie & ITv)
+	public initializeData(media: IMovie & ITv): void
 	{
 		// Card data
 		this.cardHeaderElem.setAttribute("data-id", media.id.toString());
@@ -80,7 +80,7 @@ export class MediaCard
 	/**
 	 * Get the card title.
 	 */
-	public get title()
+	public get title(): string
 	{
 		return this._title;
 	}
@@ -98,7 +98,7 @@ export class MediaCard
 	/**
 	 * Get the card description.
 	 */
-	public get description()
+	public get description(): string
 	{
 		return this._description;
 	}
@@ -116,7 +116,7 @@ export class MediaCard
 	/**
 	 * Get the card source image URL.
 	 */
-	public get image()
+	public get image(): string
 	{
 		return this._image;
 	}
