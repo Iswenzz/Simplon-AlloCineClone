@@ -1,6 +1,7 @@
 import "./assets/scss/search.scss";
 import { queryMedias } from "./index";
-import { IMedia, IMovie, ITv, MediaResponse } from "moviedb";
+import { IMedia, MediaResponse } from "moviedb";
+import { MediaCard } from "./mediaCard";
 import * as qs from "querystring";
 
 const cardContainer = document.getElementById("card-container") as HTMLElement;
@@ -64,55 +65,9 @@ export const renderCards = (mediaResponse: MediaResponse): void =>
 		cardContainer.innerText = "There are no movies that matched your query.";
 		return;
 	}
-
-	for (const m of mediaData)
-	{
-		const data = m as IMovie & ITv;
-
-		const card: HTMLElement = document.createElement("article");
-		const cardHeader: HTMLElement = document.createElement("header");
-		const img: HTMLImageElement = document.createElement("img");
-		const title: HTMLAnchorElement = document.createElement("a");
-		const cardBody: HTMLElement = document.createElement("section");
-		const cardBodyAction: HTMLElement = document.createElement("section");
-		const desc: HTMLParagraphElement = document.createElement("p");
-
-		// Card poster
-		img.src = data.poster_path 
-			? `https://image.tmdb.org/t/p/w400${data.poster_path}` 
-			: require("./assets/images/empty_portrait.webp").default;
-
-		// Card header
-		cardHeader.setAttribute("data-id", data.id.toString());
-		cardHeader.setAttribute("data-type", data.media_type.toString());
-		cardHeader.addEventListener("click", selectCard);
-		cardHeader.appendChild(img);
-
-		// Card title
-		title.setAttribute("data-id", data.id.toString());
-		title.setAttribute("data-type", data.media_type.toString());
-		title.addEventListener("click", selectCard);
-		title.innerText = data.title ?? data.name;
-		document.title = `AlloCinéClone Search - ${title.innerText}`;
-
-		cardBodyAction.classList.add("card-action");
-		cardBodyAction.appendChild(title);
-
-		// Card description
-		let descStr: string = data.overview ?? "";
-		if (descStr.length > 200)
-			descStr = descStr.substr(0, 199) + "...";
-		desc.innerText = descStr;
-		cardBody.append(cardBodyAction, desc);
+	for (const media of mediaData)
+		new MediaCard(cardContainer, media, selectCard);
 		
-		// Card content
-		card.classList.add("card", "grey", "darken-4");
-		cardHeader.classList.add("class-image", "waves-effect", "waves-light");
-		cardBody.classList.add("card-content");
-		card.append(cardHeader, cardBody);
-
-		cardContainer.appendChild(card);
-	}
 	initPagination(mediaResponse.total_pages);
 };
 
