@@ -35,7 +35,7 @@ _Points facultatifs_
 Vous pouvez utiliser n’importe librairies JS ou CSS, tant qu’elles sont installées avec npm
 
 ## TMDB
-Add your TMDB API KEY to a ``key.js`` file.
-```js
-const apiKey = "TMDB API KEY STRING";
+Add your TMDB API KEY to ``src/config/key.ts`` file.
+```ts
+export const apiKey = "TMDB API KEY STRING";
 ```
