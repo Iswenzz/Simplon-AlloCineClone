@@ -37,9 +37,10 @@ module.exports = {
 	],
 	module: {
 		rules: [
-			{	// typescript
+			{	// typescript babel
 				test: /\.(ts|tsx)$/,
-				loader: "ts-loader",
+				exclude: /(node_modules|dist)/,
+				loader: "babel-loader",
 			},
 			{	// eslint typescript
 				enforce: "pre",
