@@ -120,6 +120,9 @@ export class Pagination
 		const bottom: number[] = [];
 		const top: number[] = [];
 
+		if (this.maxPages <= this.pageShown)
+			return -this.page + 1;
+
 		for (let i = 1; i <= this.pageShown / 2; i++)
 		{
 			top.push(-i + 1);
@@ -129,7 +132,6 @@ export class Pagination
 		const offset: number[] = new Array<number>(this.maxPages);
 		offset.splice(1, top.length, ...top);
 		offset.splice(offset.length - bottom.length + 1, bottom.length, ...bottom.reverse());
-
 		return offset[this.page] ?? top.pop() - 1;
 	}
 }
