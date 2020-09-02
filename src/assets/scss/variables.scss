@@ -1,0 +1,15 @@
+// responsive queries
+$queries: (
+	desktop: "min-width: 1224px",
+	tablet_mobile: "max-device-width: 1224px",
+	portrait: "orientation: portrait",
+	retina: "min-resolution: 2dppx",
+	big: "min-device-width: 1824px"
+);
+
+// sizes
+$sizes: (0, 25, 50, 75, 100) !default;
+
+// default font & colors
+$scrollbar-bg: #292929;
+$thumb-bg: #383838;

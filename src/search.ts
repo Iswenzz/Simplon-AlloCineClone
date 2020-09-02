@@ -1,9 +1,10 @@
+import "materialize-css";
 import "./assets/scss/search.scss";
-import { queryMedias } from "./index";
 import { IMedia, MediaResponse } from "moviedb";
 import { MediaCard } from "./mediaCard";
 import * as qs from "querystring";
 import { Pagination } from "./pagination";
+import { queryMedias } from "./query";
 
 const cardContainer = document.getElementById("card-container") as HTMLElement;
 const searchHeader = document.getElementById("header-title") as HTMLHeadingElement;
@@ -25,9 +26,6 @@ const selectCard = (e: MouseEvent): void =>
  */
 export const renderCardContainer = async (): Promise<void> =>
 {
-	if (!cardContainer)
-		return;
-
 	const query: qs.ParsedUrlQuery = qs.parse(location.search.replace("?", ""));
 	const search: string = query["search"] as string;
 	const page: string = query["page"] as string ?? "1";
@@ -56,8 +54,6 @@ export const renderCardContainer = async (): Promise<void> =>
  */
 export const renderCards = (mediaResponse: MediaResponse): void =>
 {
-	if (!cardContainer)
-		return;
 	cardContainer.innerHTML = "";
 
 	const mediaData: IMedia[] = mediaResponse.results;
@@ -74,3 +70,5 @@ export const renderCards = (mediaResponse: MediaResponse): void =>
 	const currentPage: number = parseInt(query["page"] as string, 10);
 	new Pagination(currentPage, mediaResponse.total_pages, 5, pagination);
 };
+
+renderCardContainer();

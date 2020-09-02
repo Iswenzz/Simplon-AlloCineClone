@@ -1,9 +1,10 @@
+import "materialize-css";
 import "./assets/scss/media.scss";
 import * as qs from "querystring";
 import ProgressBar from "progressbar.js";
-import { queryMedia, queryPersonImage } from "./index";
 import YouTubePlayer from "youtube-player";
 import { ICast, IMedia, IVideo, MediaType, IMovie, ITv, IKeyword } from "moviedb";
+import { queryPersonImage, queryMedia } from "./query";
 
 M.Tabs.init(document.getElementById("media-tabs"));
 
@@ -148,9 +149,6 @@ export const renderTrailer = async (mediaData: IMedia): Promise<void> =>
  */
 export const renderMedia = async (): Promise<void> =>
 {
-	if (!mediaContent)
-		return;
-	
 	// query media content data
 	const query: qs.ParsedUrlQuery = qs.parse(location.search.replace("?", ""));
 	const mediaId: number = parseInt(query["id"] as string, 10);
@@ -223,3 +221,5 @@ export const renderMedia = async (): Promise<void> =>
 	renderCast(data);
 	renderAside(data);
 };
+
+renderMedia();

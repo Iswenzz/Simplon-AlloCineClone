@@ -2,7 +2,7 @@
 	"compilerOptions": {
 		"moduleResolution": "node",
 		"outDir": "./dist/",
-		"module": "ES2020",
+		"module": "esnext",
 		"target": "es6",
 		"jsx": "react",
 		"allowJs": true

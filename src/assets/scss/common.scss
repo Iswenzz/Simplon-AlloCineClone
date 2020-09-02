@@ -1,26 +1,22 @@
-// material design & montserrat fonts
-@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap");
+@import "./variables";
 
-// responsive queries
-$queries: (
-	desktop: "min-width: 1224px",
-	tablet_mobile: "max-device-width: 1224px",
-	portrait: "orientation: portrait",
-	retina: "min-resolution: 2dppx",
-	big: "min-device-width: 1824px"
-);
-
-@mixin media($keys...) {
-	@each $key in $keys {
-		@media (map-get($queries, $key)) {
-			@content;
-		}
-	}
+.material-icons {
+	font-family: "Material Icons";
+	font-weight: normal;
+	font-style: normal;
+	font-size: 24px;
+	line-height: 1;
+	letter-spacing: normal;
+	text-transform: none;
+	display: inline-block;
+	white-space: nowrap;
+	word-wrap: normal;
+	direction: ltr;
+	-moz-osx-font-smoothing: grayscale;
+	user-select: none !important;
 }
 
 // sizes
-$sizes: (0, 25, 50, 75, 100) !default;
 @each $size in $sizes {
 	.w-#{$size} {
 		width: percentage($size);
@@ -32,9 +28,6 @@ $sizes: (0, 25, 50, 75, 100) !default;
 }
 
 // default font & colors
-$scrollbar-bg: #292929;
-$thumb-bg: #383838;
-
 html, body {
 	overflow-x: hidden;
 }
@@ -83,4 +76,3 @@ body {
 
 // Materialize & AnimateCSS
 @import "../../../node_modules/materialize-css/sass/materialize";
-@import "../../../node_modules/animate.css/animate.min.css";
