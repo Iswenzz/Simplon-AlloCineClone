@@ -1,7 +1,12 @@
 import axios, { AxiosResponse } from "axios";
 import { PeopleImageResponse, MediaType, IMedia, MediaResponse, IMovie } from "moviedb";
-import { apiKey } from "./config/key";
-import { QueryMediaOptions } from "./index";
+import { MOVIEDB_API_PERSON_IMAGE, MOVIEDB_IMAGE, MOVIEDB_API_MEDIA, MOVIEDB_API_MEDIAS, MOVIEDB_API_TRENDING, MOVIEDB_API_LATEST } from "./config/api";
+
+export interface QueryMediaOptions 
+{
+	type?: MediaType,
+	page?: number | string
+}
 
 /**
  * Query a person portrait image URL.
@@ -11,10 +16,9 @@ export const queryPersonImage = async (id: number): Promise<string> =>
 {
 	try
 	{
-		const res: AxiosResponse<PeopleImageResponse> = await axios.get(
-			`https://api.themoviedb.org/3/person/${id}/images?api_key=${apiKey}`);
+		const res: AxiosResponse<PeopleImageResponse> = await axios.get(MOVIEDB_API_PERSON_IMAGE(id));
 		return res.data.profiles[0] 
-			? `https://image.tmdb.org/t/p/w400${res.data.profiles[0].file_path}` 
+			? MOVIEDB_IMAGE(res.data.profiles[0].file_path) 
 			: require("./assets/images/empty_portrait.webp").default;
 	}
 	catch (e) 
@@ -27,13 +31,13 @@ export const queryPersonImage = async (id: number): Promise<string> =>
 /**
  * Query a media from its id.
  * @param id - The media ID.
+ * @param mediaType - The media type.
  */
 export const queryMedia = async (id: number, mediaType: MediaType): Promise<IMedia | null> =>
 {
 	try
 	{
-		const res: AxiosResponse<IMedia> = await axios.get(
-			`https://api.themoviedb.org/3/${mediaType}/${id}?api_key=${apiKey}&language=en-EN&append_to_response=credits,videos,keywords`);
+		const res: AxiosResponse<IMedia> = await axios.get(MOVIEDB_API_MEDIA(mediaType, id));
 		return res.data;
 	}
 	catch (e) 
@@ -53,7 +57,7 @@ export const queryMedias = async (name: string, options: QueryMediaOptions): Pro
 	try
 	{
 		const res: AxiosResponse<MediaResponse> = await axios.get(
-			`https://api.themoviedb.org/3/search/${options.type ?? "multi"}?api_key=${apiKey}&language=en-EN&query=${name}&page=${options.page ?? 1}&include_adult=false`);
+			MOVIEDB_API_MEDIAS(options.type, name, options.page));
 		return res.data;
 	}
 	catch (e) 
@@ -70,8 +74,7 @@ export const queryLatest = async (): Promise<IMovie[] | null> =>
 {
 	try
 	{
-		const res: AxiosResponse<MediaResponse> = await axios.get(
-			`https://api.themoviedb.org/3/movie/upcoming?api_key=${apiKey}&language=en-EN&page=1`);
+		const res: AxiosResponse<MediaResponse> = await axios.get(MOVIEDB_API_LATEST());
 		return res.data.results as IMovie[];
 	}
 	catch (e) 
@@ -88,8 +91,7 @@ export const queryTrending = async (): Promise<IMedia[] | null> =>
 {
 	try
 	{
-		const res: AxiosResponse<MediaResponse> = await axios.get(
-			`https://api.themoviedb.org/3/trending/all/week?api_key=${apiKey}`);
+		const res: AxiosResponse<MediaResponse> = await axios.get(MOVIEDB_API_TRENDING());
 		return res.data.results;
 	}
 	catch (e) 

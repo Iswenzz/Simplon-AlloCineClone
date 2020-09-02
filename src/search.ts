@@ -5,6 +5,7 @@ import { MediaCard } from "./mediaCard";
 import * as qs from "querystring";
 import { Pagination } from "./pagination";
 import { queryMedias } from "./query";
+import "./autocomplete";
 
 const cardContainer = document.getElementById("card-container") as HTMLElement;
 const searchHeader = document.getElementById("header-title") as HTMLHeadingElement;

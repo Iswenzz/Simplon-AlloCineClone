@@ -5,6 +5,7 @@ import ProgressBar from "progressbar.js";
 import YouTubePlayer from "youtube-player";
 import { ICast, IMedia, IVideo, MediaType, IMovie, ITv, IKeyword } from "moviedb";
 import { queryPersonImage, queryMedia } from "./query";
+import "./autocomplete";
 
 M.Tabs.init(document.getElementById("media-tabs"));
 
