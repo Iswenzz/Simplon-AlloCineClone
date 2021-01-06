@@ -23,7 +23,7 @@
     "@babel/runtime": "^7.11.2",
     "@types/materialize-css": "^1.0.8",
     "autocompleter": "^6.0.3",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "materialize-css": "^1.0.0-rc.2",
     "progressbar.js": "^1.1.0",
     "youtube-player": "^5.5.2"
